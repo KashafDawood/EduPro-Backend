@@ -6,11 +6,11 @@ type User {
   name: String!
   email: String!
   password: String!
-  phone: String!
-  address: String!
+  phone: String
+  address: String
   role: String!
   active: Boolean!
-  photo: String!
+  photo: String
 }
 
 type Query {
