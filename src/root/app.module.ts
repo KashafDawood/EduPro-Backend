@@ -6,7 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { UserModule } from './user/user.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
