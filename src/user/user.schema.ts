@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { IsEmail } from 'class-validator';
@@ -6,6 +6,9 @@ import { IsEmail } from 'class-validator';
 @ObjectType()
 @Schema()
 export class User extends Document {
+  @Field(() => ID)
+  id: string;
+
   @Field()
   @Prop({ required: [true, 'please tell us your name'] })
   name: string;

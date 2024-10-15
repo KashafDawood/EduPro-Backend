@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type User {
+  id: ID!
   name: String!
   email: String!
   password: String!
@@ -19,7 +20,17 @@ type Query {
 }
 
 type Mutation {
+  updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
   createUser(createUserInput: CreateUserInput!): User!
+}
+
+input UpdateUserInput {
+  name: String
+  email: String
+  phone: String
+  address: String
+  photo: String
+  password: String
 }
 
 input CreateUserInput {

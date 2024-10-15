@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
+import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
 export class UserService {
@@ -13,5 +14,18 @@ export class UserService {
 
   async findByEmail(email: string): Promise<User> {
     return this.userModel.findOne({ email }).exec();
+  }
+
+  async update(id: string, updateUserInput: UpdateUserInput): Promise<User> {
+    if (updateUserInput.password) {
+      throw new BadRequestException(
+        'This route is not for password updates. Please use /updateMyPassword.',
+      );
+    }
+
+    const updatedUser = await this.userModel
+      .findByIdAndUpdate(id, updateUserInput, { new: true })
+      .exec();
+    return updatedUser;
   }
 }
