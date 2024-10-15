@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './user.schema';
 
@@ -9,5 +9,10 @@ export class UserResolver {
   @Query((returns) => [User])
   users(): Promise<User[]> {
     return this.userService.findAll();
+  }
+
+  @Query((returns) => User, { nullable: true })
+  userByEmail(@Args('email') email: string): Promise<User> {
+    return this.userService.findByEmail(email);
   }
 }
