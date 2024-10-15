@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
@@ -16,7 +20,7 @@ export class UserService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async update(id: string, updateUserInput: UpdateUserInput): Promise<User> {
+  async updateMe(id: string, updateUserInput: UpdateUserInput): Promise<User> {
     if (updateUserInput.password) {
       throw new BadRequestException(
         'This route is not for password updates. Please use /updateMyPassword.',
@@ -26,6 +30,11 @@ export class UserService {
     const updatedUser = await this.userModel
       .findByIdAndUpdate(id, updateUserInput, { new: true })
       .exec();
+
+    if (!updatedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
     return updatedUser;
   }
 }

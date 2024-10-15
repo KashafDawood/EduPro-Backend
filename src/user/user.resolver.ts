@@ -18,10 +18,10 @@ export class UserResolver {
   }
 
   @Mutation((returns) => User)
-  updateUser(
+  updateMe(
     @Args('id', { type: () => ID }) id: string,
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
   ): Promise<User> {
-    return this.userService.update(id, updateUserInput);
+    return this.userService.updateMe(id, updateUserInput);
   }
 }

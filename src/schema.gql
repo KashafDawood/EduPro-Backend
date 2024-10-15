@@ -20,7 +20,7 @@ type Query {
 }
 
 type Mutation {
-  updateUser(id: ID!, updateUserInput: UpdateUserInput!): User!
+  updateMe(id: ID!, updateUserInput: UpdateUserInput!): User!
   createUser(createUserInput: CreateUserInput!): User!
 }
 
