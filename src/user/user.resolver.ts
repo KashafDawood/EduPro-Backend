@@ -23,6 +23,11 @@ export class UserResolver {
   }
 
   @Mutation((returns) => User)
+  async DeleteMe(@Args('id') id: string): Promise<User> {
+    return this.userService.DeleteMe(id);
+  }
+
+  @Mutation((returns) => User)
   updateMe(
     @Args('id', { type: () => ID }) id: string,
     @Args('updateUserInput') updateUserInput: UpdateUserInput,

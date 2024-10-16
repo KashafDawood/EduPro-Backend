@@ -47,4 +47,20 @@ export class UserService {
 
     return user;
   }
+
+  async DeleteMe(id: string): Promise<User> {
+    const updatedUser = await this.userModel
+      .findByIdAndUpdate(
+        id,
+        { active: false },
+        { new: true, runValidators: true },
+      )
+      .exec();
+
+    if (!updatedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return updatedUser;
+  }
 }
