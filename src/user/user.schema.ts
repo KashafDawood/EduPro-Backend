@@ -48,6 +48,10 @@ export class User extends Document {
   @Field({ nullable: true })
   @Prop()
   photo: string;
+
+  @Field({ nullable: true })
+  @Prop({ default: null })
+  refreshToken: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
