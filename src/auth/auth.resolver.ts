@@ -1,7 +1,7 @@
 import { Mutation, Resolver, Args } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { User } from 'src/user/user.schema';
-import { CreateUserInput } from './dto/create-user.input';
+import { SignUpInput } from './dto/signUp-user.input';
 import { SignInInput } from './dto/signIn-user.input';
 
 @Resolver((of) => User)
@@ -14,9 +14,7 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => User)
-  signUp(
-    @Args('createUserInput') createUserInput: CreateUserInput,
-  ): Promise<User> {
-    return this.authService.signUp(createUserInput);
+  signUp(@Args('signUpInput') signUpInput: SignUpInput): Promise<User> {
+    return this.authService.signUp(signUpInput);
   }
 }

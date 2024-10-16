@@ -25,7 +25,7 @@ type Mutation {
   DeleteMe(id: String!): User!
   updateMe(id: ID!, updateUserInput: UpdateUserInput!): User!
   signIn(signInInput: SignInInput!): User!
-  signUp(createUserInput: CreateUserInput!): User!
+  signUp(signUpInput: SignUpInput!): User!
 }
 
 input UpdateUserInput {
@@ -42,7 +42,7 @@ input SignInInput {
   password: String!
 }
 
-input CreateUserInput {
+input SignUpInput {
   name: String!
   email: String!
   password: String!
