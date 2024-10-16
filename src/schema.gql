@@ -24,8 +24,8 @@ type Query {
 type Mutation {
   DeleteMe(id: String!): User!
   updateMe(id: ID!, updateUserInput: UpdateUserInput!): User!
-  signIn(email: String!, password: String!): User!
-  createUser(createUserInput: CreateUserInput!): User!
+  signIn(signInInput: SignInInput!): User!
+  signUp(createUserInput: CreateUserInput!): User!
 }
 
 input UpdateUserInput {
@@ -35,6 +35,11 @@ input UpdateUserInput {
   address: String
   photo: String
   password: String
+}
+
+input SignInInput {
+  email: String!
+  password: String!
 }
 
 input CreateUserInput {

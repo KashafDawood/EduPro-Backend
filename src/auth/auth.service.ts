@@ -14,9 +14,9 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  async signIn(email: string, password: string): Promise<any> {
+  async signIn(input: SignInInput): Promise<any> {
     const user = await this.userModel
-      .findOne({ email })
+      .findOne({ email: input.email })
       .select('+password')
       .exec();
 
@@ -24,7 +24,7 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect! email');
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(input.password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Incorrect! password');
     }
@@ -34,7 +34,7 @@ export class AuthService {
     return result;
   }
 
-  async create(createUserInput: CreateUserInput): Promise<User> {
+  async signUp(createUserInput: CreateUserInput): Promise<User> {
     const { password, ...rest } = createUserInput;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new this.userModel({

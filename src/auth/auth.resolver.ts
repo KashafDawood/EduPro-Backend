@@ -9,17 +9,14 @@ export class AuthResolver {
   constructor(private authService: AuthService) {}
 
   @Mutation((returns) => User)
-  signIn(
-    @Args('email') email: string,
-    @Args('password') password: string,
-  ): Promise<any> {
-    return this.authService.signIn(email, password);
+  signIn(@Args('signInInput') signInInput: SignInInput): Promise<any> {
+    return this.authService.signIn(signInInput);
   }
 
   @Mutation((returns) => User)
-  createUser(
+  signUp(
     @Args('createUserInput') createUserInput: CreateUserInput,
   ): Promise<User> {
-    return this.authService.create(createUserInput);
+    return this.authService.signUp(createUserInput);
   }
 }
