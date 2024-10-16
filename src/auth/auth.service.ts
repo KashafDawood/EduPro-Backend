@@ -5,49 +5,33 @@ import { CreateUserInput } from './dto/create-user.input';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
-import { JwtService } from '@nestjs/jwt';
-import { SignInInput } from './dto/signIn-user.input';
+import { SignInInput } from './dto/signIn-input';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private userService: UserService,
-    private jwtService: JwtService,
   ) {}
 
-  async generateAccessToken(user: User) {
-    const payload = { sub: user.id, email: user.email };
-    return this.jwtService.sign(payload, {
-      secret: process.env.JWT_ACCESS_SECRET,
-    });
-  }
-
-  async generateRefreshToken(user: User) {
-    const payload = { sub: user.id, email: user.email };
-    return this.jwtService.sign(payload, {
-      secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: '7d',
-    });
-  }
-
-  async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.userService.findByEmail(email);
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return null;
-  }
-
-  async signIn(input: SignInInput): Promise<any> {
-    const user = this.validateUser(input.email, input.password);
+  async signIn(email: string, password: string): Promise<any> {
+    const user = await this.userModel
+      .findOne({ email })
+      .select('+password')
+      .exec();
 
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Incorrect! email');
     }
 
-    return user;
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Incorrect! password');
+    }
+
+    const { password: userPassword, ...result } = user.toObject();
+    result.id = user.id;
+    return result;
   }
 
   async create(createUserInput: CreateUserInput): Promise<User> {
