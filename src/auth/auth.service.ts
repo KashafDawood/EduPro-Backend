@@ -5,7 +5,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
-import { SignInInput } from './dto/signIn-input';
+import { SignInInput } from './dto/signIn-user.input';
 
 @Injectable()
 export class AuthService {
