@@ -17,6 +17,11 @@ export class UserResolver {
     return this.userService.findByEmail(email);
   }
 
+  @Query((returns) => User)
+  userById(@Args('id') id: string): Promise<User> {
+    return this.userService.findById(id);
+  }
+
   @Mutation((returns) => User)
   updateMe(
     @Args('id', { type: () => ID }) id: string,
