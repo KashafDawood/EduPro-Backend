@@ -23,6 +23,7 @@ type Query {
 type Mutation {
   DeleteMe(id: String!): User!
   updateMe(id: ID!, updateUserInput: UpdateUserInput!): User!
+  signIn(email: String!, password: String!): User!
   createUser(createUserInput: CreateUserInput!): User!
 }
 
