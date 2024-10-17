@@ -5,6 +5,7 @@ import { SignUpInput } from './dto/signUp-user.input';
 import { SignInInput } from './dto/signIn-user.input';
 import { AuthResponse } from './dto/auth-response.dto';
 import { Response } from 'express';
+import { RefreshAccessTokenResponse } from './dto/refresh-accessToken.dto';
 
 @Resolver((of) => User)
 export class AuthResolver {
@@ -36,6 +37,32 @@ export class AuthResolver {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  @Mutation((returns) => RefreshAccessTokenResponse)
+  async refreshAccessToken(
+    @Args('id') id: string,
+    @Args('refreshToken') refreshToken: string,
+    @Context('res') res: Response,
+  ): Promise<any> {
+    const accessToken = await this.authService.refreshAcessToken(
+      id,
+      refreshToken,
+    );
+
+    if (!accessToken) {
+      throw new Error('Unable to refresh access token');
+    }
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      expires: new Date(
+        Date.now() + Number(process.env.ACCESS_COOKIE_EXPIRES_IN) * 60 * 1000,
+      ),
+    });
+
+    return { accessToken };
   }
 
   @Mutation((returns) => User)

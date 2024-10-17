@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SignUpInput } from './dto/signUp-user.input';
@@ -43,21 +47,29 @@ export class AuthService {
   }
 
   async validateRefreshToken(
-    id: string,
+    user: User,
     refreshToken: string,
-  ): Promise<User | null> {
-    const user = await this.userService.findById(id);
-
-    if (!user || !user.refreshToken) return null;
+  ): Promise<boolean | null> {
+    if (!user.refreshToken) return null;
 
     const isValid_RToken = await bcrypt.compare(
       refreshToken,
       user.refreshToken,
     );
 
-    if (!isValid_RToken) throw new UnauthorizedException();
+    if (!isValid_RToken) throw new UnauthorizedException('Invalid Token');
 
-    return user;
+    return true;
+  }
+
+  async refreshAcessToken(id: string, refreshToken: string): Promise<any> {
+    const user = await this.userService.findById(id);
+    const isValidToken = await this.validateRefreshToken(user, refreshToken);
+
+    if (!isValidToken) throw new NotFoundException('Token not found');
+
+    const accessToken = await this.generateAccessToken(user);
+    return accessToken;
   }
 
   async signIn(input: SignInInput): Promise<any> {

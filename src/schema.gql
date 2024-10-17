@@ -20,6 +20,10 @@ type AuthResponse {
   refreshToken: String
 }
 
+type RefreshAccessTokenResponse {
+  accessToken: String
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
@@ -30,6 +34,7 @@ type Mutation {
   DeleteMe(id: String!): User!
   updateMe(id: ID!, updateUserInput: UpdateUserInput!): User!
   signIn(signInInput: SignInInput!): AuthResponse!
+  refreshAccessToken(id: String!, refreshToken: String!): RefreshAccessTokenResponse!
   signUp(signUpInput: SignUpInput!): User!
 }
 
