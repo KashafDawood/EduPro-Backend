@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SignUpInput } from './dto/signUp-user.input';
@@ -16,14 +20,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async generateAccessToken(user) {
+  async generateAccessToken(user: User) {
     const payload = { sub: user.id };
     return await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
     });
   }
 
-  async generateRefreshToken(user) {
+  async generateRefreshToken(user: User) {
     const payload = { sub: user.id, email: user.email };
     return await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
@@ -31,7 +35,7 @@ export class AuthService {
     });
   }
 
-  async saveRefreshTokenToDB(id, refreshToken) {
+  async saveRefreshTokenToDB(id: string, refreshToken: string) {
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
     await this.userModel
       .findByIdAndUpdate(
@@ -40,6 +44,32 @@ export class AuthService {
         { new: true },
       )
       .exec();
+  }
+
+  async validateRefreshToken(
+    user: User,
+    refreshToken: string,
+  ): Promise<boolean | null> {
+    if (!user.refreshToken) return null;
+
+    const isValid_RToken = await bcrypt.compare(
+      refreshToken,
+      user.refreshToken,
+    );
+
+    if (!isValid_RToken) throw new UnauthorizedException('Invalid Token');
+
+    return true;
+  }
+
+  async refreshAcessToken(id: string, refreshToken: string): Promise<any> {
+    const user = await this.userService.findById(id);
+    const isValidToken = await this.validateRefreshToken(user, refreshToken);
+
+    if (!isValidToken) throw new NotFoundException('Token not found');
+
+    const accessToken = await this.generateAccessToken(user);
+    return accessToken;
   }
 
   async signIn(input: SignInInput): Promise<any> {
