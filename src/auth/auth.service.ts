@@ -31,6 +31,17 @@ export class AuthService {
     });
   }
 
+  async saveRefreshTokenToDB(id, refreshToken) {
+    const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+    await this.userModel
+      .findByIdAndUpdate(
+        id,
+        { refreshToken: hashedRefreshToken },
+        { new: true },
+      )
+      .exec();
+  }
+
   async signIn(input: SignInInput): Promise<any> {
     const user = await this.userModel
       .findOne({ email: input.email })
@@ -48,6 +59,8 @@ export class AuthService {
 
     const accessToken = await this.generateAccessToken(user);
     const refreshToken = await this.generateRefreshToken(user);
+
+    this.saveRefreshTokenToDB(user.id, refreshToken);
 
     return { accessToken, refreshToken };
   }
