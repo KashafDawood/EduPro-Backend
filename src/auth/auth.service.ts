@@ -27,7 +27,7 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     return await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: '7d',
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN,
     });
   }
 

@@ -21,11 +21,18 @@ export class AuthResolver {
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
+      expires: new Date(
+        Date.now() + Number(process.env.ACCESS_COOKIE_EXPIRES_IN) * 60 * 1000,
+      ),
     });
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
+      expires: new Date(
+        Date.now() +
+          Number(process.env.REFRESH_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000,
+      ),
     });
 
     return { accessToken, refreshToken };
