@@ -16,14 +16,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async generateAccessToken(user) {
+  async generateAccessToken(user: User) {
     const payload = { sub: user.id };
     return await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
     });
   }
 
-  async generateRefreshToken(user) {
+  async generateRefreshToken(user: User) {
     const payload = { sub: user.id, email: user.email };
     return await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
@@ -31,7 +31,7 @@ export class AuthService {
     });
   }
 
-  async saveRefreshTokenToDB(id, refreshToken) {
+  async saveRefreshTokenToDB(id: string, refreshToken: string) {
     const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
     await this.userModel
       .findByIdAndUpdate(
@@ -40,6 +40,24 @@ export class AuthService {
         { new: true },
       )
       .exec();
+  }
+
+  async validateRefreshToken(
+    id: string,
+    refreshToken: string,
+  ): Promise<User | null> {
+    const user = await this.userService.findById(id);
+
+    if (!user || !user.refreshToken) return null;
+
+    const isValid_RToken = await bcrypt.compare(
+      refreshToken,
+      user.refreshToken,
+    );
+
+    if (!isValid_RToken) throw new UnauthorizedException();
+
+    return user;
   }
 
   async signIn(input: SignInInput): Promise<any> {
