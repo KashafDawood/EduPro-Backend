@@ -15,6 +15,11 @@ type User {
   refreshToken: String
 }
 
+type AuthResponse {
+  accessToken: String
+  refreshToken: String
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
@@ -24,7 +29,7 @@ type Query {
 type Mutation {
   DeleteMe(id: String!): User!
   updateMe(id: ID!, updateUserInput: UpdateUserInput!): User!
-  signIn(signInInput: SignInInput!): User!
+  signIn(signInInput: SignInInput!): AuthResponse!
   signUp(signUpInput: SignUpInput!): User!
 }
 

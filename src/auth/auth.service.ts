@@ -6,13 +6,30 @@ import * as bcrypt from 'bcrypt';
 import { User } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
 import { SignInInput } from './dto/signIn-user.input';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private userService: UserService,
+    private jwtService: JwtService,
   ) {}
+
+  async generateAccessToken(user) {
+    const payload = { sub: user.id };
+    return await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_ACCESS_SECRET,
+    });
+  }
+
+  async generateRefreshToken(user) {
+    const payload = { sub: user.id, email: user.email };
+    return await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_REFRESH_SECRET,
+      expiresIn: '7d',
+    });
+  }
 
   async signIn(input: SignInInput): Promise<any> {
     const user = await this.userModel
@@ -29,9 +46,10 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect! password');
     }
 
-    const { password: userPassword, ...result } = user.toObject();
-    result.id = user.id;
-    return result;
+    const accessToken = await this.generateAccessToken(user);
+    const refreshToken = await this.generateRefreshToken(user);
+
+    return { accessToken, refreshToken };
   }
 
   async signUp(signUpInput: SignUpInput): Promise<User> {
