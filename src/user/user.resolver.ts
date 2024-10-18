@@ -2,12 +2,15 @@ import { Resolver, Query, Args, Mutation, ID } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './user.schema';
 import { UpdateUserInput } from './dto/update-user.input';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Resolver((of) => User)
 export class UserResolver {
   constructor(private userService: UserService) {}
 
   @Query((returns) => [User])
+  @UseGuards(AuthGuard)
   users(): Promise<User[]> {
     return this.userService.findAll();
   }
