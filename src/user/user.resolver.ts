@@ -10,7 +10,6 @@ export class UserResolver {
   constructor(private userService: UserService) {}
 
   @Query((returns) => [User])
-  @UseGuards(AuthGuard)
   users(): Promise<User[]> {
     return this.userService.findAll();
   }
@@ -20,6 +19,7 @@ export class UserResolver {
     return this.userService.findByEmail(email);
   }
 
+  @UseGuards(AuthGuard)
   @Query((returns) => User)
   userById(@Args('id') id: string): Promise<User> {
     return this.userService.findById(id);

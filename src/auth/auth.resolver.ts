@@ -6,11 +6,13 @@ import { SignInInput } from './dto/signIn-user.input';
 import { AuthResponse } from './dto/auth-response.dto';
 import { Response } from 'express';
 import { RefreshAccessTokenResponse } from './dto/refresh-accessToken.dto';
+import { Public } from 'src/decorators/publicRoute.decorator';
 
 @Resolver((of) => User)
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
+  @Public()
   @Mutation((returns) => AuthResponse)
   async signIn(
     @Args('signInInput') signInInput: SignInInput,
@@ -65,6 +67,7 @@ export class AuthResolver {
     return { accessToken };
   }
 
+  @Public()
   @Mutation((returns) => User)
   signUp(@Args('signUpInput') signUpInput: SignUpInput): Promise<User> {
     return this.authService.signUp(signUpInput);
