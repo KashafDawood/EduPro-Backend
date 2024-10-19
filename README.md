@@ -56,7 +56,14 @@ $ yarn run test:e2e
 
 # test coverage
 $ yarn run test:cov
+
+# env can only be accessed by project team.
+# get env
+$ npx dotenv-vault@latest pull
+
 ```
+
+
 
 ## Resources
 
