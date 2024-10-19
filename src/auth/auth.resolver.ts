@@ -41,6 +41,7 @@ export class AuthResolver {
     return { accessToken, refreshToken };
   }
 
+  @Public()
   @Mutation((returns) => RefreshAccessTokenResponse)
   async refreshAccessToken(
     @Args('id') id: string,
