@@ -13,7 +13,15 @@ type User {
   active: Boolean!
   photo: String
   refreshToken: String
+  passwordChangedAt: DateTime
+  passwordResetExpire: DateTime
+  passwordResetToken: String
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type AuthResponse {
   accessToken: String

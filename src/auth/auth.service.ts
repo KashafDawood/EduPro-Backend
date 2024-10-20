@@ -104,4 +104,8 @@ export class AuthService {
     });
     return newUser.save();
   }
+
+  // async updatePassword():Promise<any>{
+  //   const user =
+  // }
 }
