@@ -66,37 +66,50 @@ export class User extends Document {
   @Field({ nullable: true })
   @Prop()
   passwordResetToken: String;
+}
 
-  async correctPassword(
+export interface User extends Document {
+  correctPassword: (
     candidatePassword: string,
     userPassword: string,
-  ): Promise<boolean> {
-    return await bcrypt.compare(candidatePassword, userPassword);
-  }
+  ) => Promise<boolean>;
 
-  changedPasswordAfter(JWTTimestamp: number): boolean {
-    if (this.passwordChangedAt) {
-      const changedTimestamp = parseInt(
-        (this.passwordChangedAt.getTime() / 1000).toString(),
-        10,
-      );
-      return JWTTimestamp < changedTimestamp;
-    }
-    return false;
-  }
-
-  createPasswordResetToken(): string {
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    this.passwordResetToken = crypto
-      .createHash('sha256')
-      .update(resetToken)
-      .digest('hex');
-    this.passwordResetExpire = new Date(Date.now() + 10 * 60 * 1000);
-    return resetToken;
-  }
+  changedPasswordAfter: (JWTTimestamp: number) => boolean;
+  createPasswordResetToken: () => string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+//Instance Methods
+UserSchema.methods.correctPassword = async function (
+  candidatePassword: string,
+  userPassword: string,
+): Promise<boolean> {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+UserSchema.methods.changedPasswordAfter = function (
+  JWTTimestamp: number,
+): boolean {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      (this.passwordChangedAt.getTime() / 1000).toString(),
+      10,
+    );
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
+};
+
+UserSchema.methods.createPasswordResetToken = function (): string {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+  this.passwordResetExpire = new Date(Date.now() + 10 * 60 * 1000);
+  return resetToken;
+};
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();

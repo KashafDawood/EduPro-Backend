@@ -82,10 +82,7 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect! email');
     }
 
-    const isPasswordValid = await bcrypt.compare(input.password, user.password);
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Incorrect! password');
-    }
+    user.correctPassword(input.password, user.password);
 
     const accessToken = await this.generateAccessToken(user);
     const refreshToken = await this.generateRefreshToken(user);
