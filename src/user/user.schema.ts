@@ -67,7 +67,6 @@ export class User extends Document {
   @Prop()
   passwordResetToken: String;
 
-  // Instance methods
   async correctPassword(
     candidatePassword: string,
     userPassword: string,
