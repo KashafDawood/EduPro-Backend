@@ -31,10 +31,13 @@ export class AuthService {
 
   async generateRefreshToken(user: User) {
     const payload = { sub: user.id, email: user.email };
-    return await this.jwtService.signAsync(payload, {
+    const refreshToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
       expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN,
     });
+
+    this.saveRefreshTokenToDB(user.id, refreshToken);
+    return refreshToken;
   }
 
   async saveRefreshTokenToDB(id: string, refreshToken: string) {
@@ -88,8 +91,6 @@ export class AuthService {
 
     const accessToken = await this.generateAccessToken(user);
     const refreshToken = await this.generateRefreshToken(user);
-
-    this.saveRefreshTokenToDB(user.id, refreshToken);
 
     return { accessToken, refreshToken };
   }
