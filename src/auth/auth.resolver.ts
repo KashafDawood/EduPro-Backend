@@ -8,6 +8,7 @@ import { Request, Response } from 'express';
 import { RefreshAccessTokenResponse } from './dto/refresh-accessToken.dto';
 import { Public } from 'src/decorators/publicRoute.decorator';
 import { UpdatePasswordInput } from './dto/update-password.input';
+import { ForgetPasswordInput } from './dto/forget-password.input';
 
 @Resolver((of) => User)
 export class AuthResolver {
@@ -79,8 +80,16 @@ export class AuthResolver {
   updatePassword(
     @Args('updatePasswordInput') updatePasswordInput: UpdatePasswordInput,
     @Context() context: { req: Request },
-  ) {
+  ): Promise<User> {
     const { req } = context;
     return this.authService.updatePassword(req, updatePasswordInput);
+  }
+
+  @Public()
+  @Mutation((returns) => User)
+  forgetPassword(
+    @Args('forgetPasswordInput') forgetPasswordInput: ForgetPasswordInput,
+  ): Promise<User> {
+    return this.authService.forgetPassword(forgetPasswordInput);
   }
 }

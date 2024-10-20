@@ -12,6 +12,7 @@ import { UserService } from 'src/user/user.service';
 import { SignInInput } from './dto/signIn-user.input';
 import { JwtService } from '@nestjs/jwt';
 import { UpdatePasswordInput } from './dto/update-password.input';
+import { ForgetPasswordInput } from './dto/forget-password.input';
 
 @Injectable()
 export class AuthService {
@@ -108,6 +109,15 @@ export class AuthService {
 
     user.password = input.newPassword;
     await user.save();
+
+    return user;
+  }
+
+  async forgetPassword(input: ForgetPasswordInput): Promise<User> {
+    const user = await this.userService.findByEmail(input.email);
+    if (!user) {
+      throw new UnauthorizedException('There is no User with this email');
+    }
 
     return user;
   }
