@@ -11,6 +11,7 @@ import { User } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
 import { SignInInput } from './dto/signIn-user.input';
 import { JwtService } from '@nestjs/jwt';
+import { UpdatePasswordInput } from './dto/update-password.input';
 
 @Injectable()
 export class AuthService {
@@ -93,16 +94,21 @@ export class AuthService {
   }
 
   async signUp(signUpInput: SignUpInput): Promise<User> {
-    const { password, ...rest } = signUpInput;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new this.userModel({
-      ...rest,
-      password: hashedPassword,
-    });
+    const newUser = new this.userModel(signUpInput);
     return newUser.save();
   }
 
-  // async updatePassword():Promise<any>{
-  //   const user =
-  // }
+  async updatePassword(req: any, input: UpdatePasswordInput): Promise<User> {
+    const userId = req.user.id;
+    const user = await this.userModel.findById(userId).select('+password');
+
+    if (!(await user.correctPassword(input.userPassword, user.password))) {
+      throw new UnauthorizedException('Your current password is wrong');
+    }
+
+    user.password = input.newPassword;
+    await user.save();
+
+    return user;
+  }
 }

@@ -4,9 +4,10 @@ import { User } from 'src/user/user.schema';
 import { SignUpInput } from './dto/signUp-user.input';
 import { SignInInput } from './dto/signIn-user.input';
 import { AuthResponse } from './dto/auth-response.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { RefreshAccessTokenResponse } from './dto/refresh-accessToken.dto';
 import { Public } from 'src/decorators/publicRoute.decorator';
+import { UpdatePasswordInput } from './dto/update-password.input';
 
 @Resolver((of) => User)
 export class AuthResolver {
@@ -72,5 +73,14 @@ export class AuthResolver {
   @Mutation((returns) => User)
   signUp(@Args('signUpInput') signUpInput: SignUpInput): Promise<User> {
     return this.authService.signUp(signUpInput);
+  }
+
+  @Mutation((returns) => User)
+  updatePassword(
+    @Args('updatePasswordInput') updatePasswordInput: UpdatePasswordInput,
+    @Context() context: { req: Request },
+  ) {
+    const { req } = context;
+    return this.authService.updatePassword(req, updatePasswordInput);
   }
 }

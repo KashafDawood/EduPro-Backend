@@ -23,7 +23,7 @@ export class UserService {
   async updateMe(id: string, updateUserInput: UpdateUserInput): Promise<User> {
     if (updateUserInput.password) {
       throw new BadRequestException(
-        'This route is not for password updates. Please use /updateMyPassword.',
+        'This route is not for password updates. Please use /updatePassword.',
       );
     }
 

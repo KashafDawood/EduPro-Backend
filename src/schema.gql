@@ -44,6 +44,7 @@ type Mutation {
   signIn(signInInput: SignInInput!): AuthResponse!
   refreshAccessToken(id: String!, refreshToken: String!): RefreshAccessTokenResponse!
   signUp(signUpInput: SignUpInput!): User!
+  updatePassword(updatePasswordInput: UpdatePasswordInput!): User!
 }
 
 input UpdateUserInput {
@@ -64,4 +65,9 @@ input SignUpInput {
   name: String!
   email: String!
   password: String!
+}
+
+input UpdatePasswordInput {
+  userPassword: String!
+  newPassword: String!
 }
