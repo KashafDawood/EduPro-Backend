@@ -18,17 +18,6 @@ declare module 'express-serve-static-core' {
   }
 }
 
-function changedPasswordAfter(JWTTimestamp: number, user: User): boolean {
-  if (user.passwordChangedAt) {
-    const changedTimestamp = parseInt(
-      (user.passwordChangedAt.getTime() / 1000).toString(),
-      10,
-    );
-    return JWTTimestamp < changedTimestamp;
-  }
-  return false;
-}
-
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -78,7 +67,7 @@ export class AuthGuard implements CanActivate {
         );
       }
 
-      if (changedPasswordAfter(decoded.iat, currentUser)) {
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
         throw new UnauthorizedException(
           'User recently changed password! Please log in again.',
         );
