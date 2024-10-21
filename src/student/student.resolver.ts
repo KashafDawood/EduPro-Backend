@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
 import { Student } from 'src/user/student.schema';
 import { UserService } from 'src/user/user.service';
