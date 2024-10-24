@@ -8,13 +8,10 @@ export class Student extends Document {
   @Field(() => ID)
   id: string;
 
+  // Student-related fields
   @Field()
   @Prop({ required: [true, 'please enter the student name'] })
   studentName: string;
-
-  @Field({ nullable: true })
-  @Prop()
-  studentRollNumber: string;
 
   @Field()
   @Prop({
@@ -32,7 +29,7 @@ export class Student extends Document {
   @Field()
   @Prop({
     required: [true, 'please enter the student gender'],
-    enum: ['male, female'],
+    enum: ['male', 'female'],
   })
   gender: string;
 
@@ -50,6 +47,14 @@ export class Student extends Document {
   @Prop({ default: Date.now })
   dateOfAdmission: Date;
 
+  @Field()
+  @Prop({ required: [true, 'please enter the student address'] })
+  address: string;
+
+  @Field({ nullable: true })
+  @Prop()
+  studentRollNumber: string;
+
   @Field({ nullable: true })
   @Prop()
   religious: string;
@@ -66,6 +71,11 @@ export class Student extends Document {
   @Prop()
   monthlyFee: number;
 
+  @Field({ nullable: true })
+  @Prop()
+  photo: string;
+
+  // Guardian-related fields
   @Field()
   @Prop({ required: 'please enter the guardian name' })
   guardianName: string;
@@ -102,25 +112,6 @@ export class Student extends Document {
   @Field({ nullable: true })
   @Prop()
   guardianMonthlyIncome: Number;
-
-  @Field()
-  @Prop({ required: [true, 'please enter the student address'] })
-  address: string;
-
-  @Field()
-  @Prop({
-    default: 'student',
-    enum: ['student', 'admin', 'teacher', 'otherStaff'],
-  })
-  role: string;
-
-  @Field()
-  @Prop({ default: true })
-  active: boolean;
-
-  @Field({ nullable: true })
-  @Prop()
-  photo: string;
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);

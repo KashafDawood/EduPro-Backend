@@ -32,6 +32,30 @@ type RefreshAccessTokenResponse {
   accessToken: String
 }
 
+type Student {
+  id: ID!
+  studentName: String!
+  studentCNIC: String!
+  gender: String!
+  class: String!
+  dateOfBirth: DateTime!
+  dateOfAdmission: DateTime!
+  address: String!
+  studentRollNumber: String
+  religious: String
+  numberOfSiblings: Float
+  admissionFee: Float
+  monthlyFee: Float
+  photo: String
+  guardianName: String!
+  guardianRelation: String!
+  guardianPhone: String!
+  guardianCNIC: String!
+  guardianProfession: String
+  guardianProfessionType: String
+  guardianMonthlyIncome: Float
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
@@ -46,6 +70,7 @@ type Mutation {
   signUp(signUpInput: SignUpInput!): User!
   updatePassword(updatePasswordInput: UpdatePasswordInput!): User!
   forgetPassword(forgetPasswordInput: ForgetPasswordInput!): User!
+  createStudent(createStudentInput: CreateStudentInput!): Student!
 }
 
 input UpdateUserInput {
@@ -75,4 +100,28 @@ input UpdatePasswordInput {
 
 input ForgetPasswordInput {
   email: String!
+}
+
+input CreateStudentInput {
+  studentName: String!
+  studentCNIC: String!
+  gender: String!
+  class: String!
+  dateOfBirth: DateTime!
+  dateOfAdmission: DateTime
+  address: String!
+  active: Boolean
+  studentRollNumber: String
+  religious: String
+  numberOfSiblings: Float
+  admissionFee: Float
+  monthlyFee: Float
+  photo: String
+  guardianName: String!
+  guardianRelation: String!
+  guardianPhone: String!
+  guardianCNIC: String!
+  guardianProfession: String
+  guardianProfessionType: String
+  guardianMonthlyIncome: Float
 }

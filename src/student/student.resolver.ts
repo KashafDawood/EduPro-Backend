@@ -1,13 +1,16 @@
-import { Query, Resolver } from '@nestjs/graphql';
-import { Student } from 'src/user/student.schema';
-import { UserService } from 'src/user/user.service';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Student } from 'src/student/student.schema';
+import { StudentService } from './student.service';
+import { CreateStudentInput } from './dto/create-student.input';
 
 @Resolver((of) => Student)
 export class StudentResolver {
-  constructor(private userService: UserService) {}
+  constructor(private studentService: StudentService) {}
 
-  //   @Query(returns => [Student])
-  //   students():Promise<Student[]>{
-  //     return this.userService.findAll()
-  //   }
+  @Mutation((returns) => Student)
+  createStudent(
+    @Args('createStudentInput') createStudentInput: CreateStudentInput,
+  ): Promise<Student> {
+    return this.studentService.createStudent(createStudentInput);
+  }
 }
