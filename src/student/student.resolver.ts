@@ -13,4 +13,9 @@ export class StudentResolver {
   ): Promise<Student> {
     return this.studentService.createStudent(createStudentInput);
   }
+
+  @Query((returns) => [Student])
+  findAllStudent(): Promise<Student[]> {
+    return this.studentService.findAllStudent();
+  }
 }

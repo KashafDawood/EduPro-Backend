@@ -60,6 +60,7 @@ type Query {
   users: [User!]!
   userByEmail(email: String!): User
   userById(id: String!): User!
+  findAllStudent: [Student!]!
 }
 
 type Mutation {

@@ -16,4 +16,8 @@ export class StudentService {
     const newStudent = new this.studentModel(createStudentInput);
     return newStudent.save();
   }
+
+  async findAllStudent(): Promise<Student[]> {
+    return this.studentModel.find().exec();
+  }
 }
