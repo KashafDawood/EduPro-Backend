@@ -61,6 +61,7 @@ type Query {
   userByEmail(email: String!): User
   userById(id: String!): User!
   findAllStudent: [Student!]!
+  findStudentById(studentId: String!): Student!
 }
 
 type Mutation {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Student } from './student.schema';
 import { Model } from 'mongoose';
@@ -19,5 +19,17 @@ export class StudentService {
 
   async findAllStudent(): Promise<Student[]> {
     return this.studentModel.find().exec();
+  }
+
+  async findStudentById(studentId: string): Promise<Student> {
+    const student = await this.studentModel.findById(studentId).exec();
+
+    if (!student) {
+      throw new NotFoundException(
+        `Student not found with this ${studentId} ID`,
+      );
+    }
+
+    return student;
   }
 }

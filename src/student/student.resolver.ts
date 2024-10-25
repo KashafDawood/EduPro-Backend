@@ -18,4 +18,9 @@ export class StudentResolver {
   findAllStudent(): Promise<Student[]> {
     return this.studentService.findAllStudent();
   }
+
+  @Query((returns) => Student)
+  findStudentById(@Args('studentId') studentId: string): Promise<Student> {
+    return this.studentService.findStudentById(studentId);
+  }
 }
