@@ -23,4 +23,9 @@ export class StudentResolver {
   findStudentById(@Args('studentId') studentId: string): Promise<Student> {
     return this.studentService.findStudentById(studentId);
   }
+
+  @Mutation((returns) => Student)
+  deleteStudent(@Args('studentId') studentId: string): Promise<Student> {
+    return this.studentService.deleteStudent(studentId);
+  }
 }

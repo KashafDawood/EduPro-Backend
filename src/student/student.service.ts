@@ -32,4 +32,20 @@ export class StudentService {
 
     return student;
   }
+
+  async deleteStudent(studentId: string): Promise<Student> {
+    const deletedStudent = await this.studentModel.findByIdAndUpdate(
+      studentId,
+      { active: false },
+      { new: true, runValidators: true },
+    );
+
+    if (!deletedStudent) {
+      throw new NotFoundException(
+        `Student not found with this ${studentId} ID`,
+      );
+    }
+
+    return deletedStudent;
+  }
 }

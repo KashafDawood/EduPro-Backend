@@ -47,6 +47,7 @@ type Student {
   admissionFee: Float
   monthlyFee: Float
   photo: String
+  active: Boolean!
   guardianName: String!
   guardianRelation: String!
   guardianPhone: String!
@@ -73,6 +74,7 @@ type Mutation {
   updatePassword(updatePasswordInput: UpdatePasswordInput!): User!
   forgetPassword(forgetPasswordInput: ForgetPasswordInput!): User!
   createStudent(createStudentInput: CreateStudentInput!): Student!
+  deleteStudent(studentId: String!): Student!
 }
 
 input UpdateUserInput {

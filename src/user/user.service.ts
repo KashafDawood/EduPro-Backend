@@ -49,7 +49,7 @@ export class UserService {
   }
 
   async DeleteMe(id: string): Promise<User> {
-    const updatedUser = await this.userModel
+    const deletedUser = await this.userModel
       .findByIdAndUpdate(
         id,
         { active: false },
@@ -57,10 +57,10 @@ export class UserService {
       )
       .exec();
 
-    if (!updatedUser) {
+    if (!deletedUser) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
-    return updatedUser;
+    return deletedUser;
   }
 }

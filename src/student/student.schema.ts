@@ -75,6 +75,10 @@ export class Student extends Document {
   @Prop()
   photo: string;
 
+  @Field()
+  @Prop({ default: true })
+  active: boolean;
+
   // Guardian-related fields
   @Field()
   @Prop({ required: 'please enter the guardian name' })
@@ -115,3 +119,8 @@ export class Student extends Document {
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);
+
+StudentSchema.pre('find', function (next) {
+  this.where({ active: true });
+  next();
+});
