@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Student } from './student.schema';
 import { Model } from 'mongoose';
 import { CreateStudentInput } from './dto/create-student.input';
+import { UpdateStudentInput } from './dto/update-student.dto';
 
 @Injectable()
 export class StudentService {
@@ -47,5 +48,25 @@ export class StudentService {
     }
 
     return deletedStudent;
+  }
+
+  async updateStudent(
+    studentId: string,
+    updateStudentInput: UpdateStudentInput,
+  ): Promise<Student> {
+    const updatedStudent = await this.studentModel
+      .findByIdAndUpdate(studentId, updateStudentInput, {
+        new: true,
+        runValidators: true,
+      })
+      .exec();
+
+    if (!updatedStudent) {
+      throw new NotFoundException(
+        `Student not found with this ${studentId} ID`,
+      );
+    }
+
+    return updatedStudent;
   }
 }

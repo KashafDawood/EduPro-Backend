@@ -1,27 +1,27 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreateStudentInput {
-  @Field()
-  studentName: string;
+export class UpdateStudentInput {
+  @Field({ nullable: true })
+  studentName?: string;
 
-  @Field()
-  studentCNIC: string;
+  @Field({ nullable: true })
+  studentCNIC?: string;
 
-  @Field()
-  gender: string;
+  @Field({ nullable: true })
+  gender?: string;
 
-  @Field()
-  class: string;
+  @Field({ nullable: true })
+  class?: string;
 
-  @Field()
-  dateOfBirth: Date;
+  @Field({ nullable: true })
+  dateOfBirth?: Date;
 
   @Field({ nullable: true })
   dateOfAdmission?: Date;
 
-  @Field()
-  address: string;
+  @Field({ nullable: true })
+  address?: string;
 
   @Field({ nullable: true })
   studentRollNumber?: string;
@@ -41,17 +41,17 @@ export class CreateStudentInput {
   @Field({ nullable: true })
   photo?: string;
 
-  @Field()
-  guardianName: string;
+  @Field({ nullable: true })
+  guardianName?: string;
 
-  @Field()
-  guardianRelation: string;
+  @Field({ nullable: true })
+  guardianRelation?: string;
 
-  @Field()
-  guardianPhone: string;
+  @Field({ nullable: true })
+  guardianPhone?: string;
 
-  @Field()
-  guardianCNIC: string;
+  @Field({ nullable: true })
+  guardianCNIC?: string;
 
   @Field({ nullable: true })
   guardianProfession?: string;

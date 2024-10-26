@@ -75,6 +75,7 @@ type Mutation {
   forgetPassword(forgetPasswordInput: ForgetPasswordInput!): User!
   createStudent(createStudentInput: CreateStudentInput!): Student!
   deleteStudent(studentId: String!): Student!
+  updateStudent(studentId: String!, updateStudentInput: UpdateStudentInput!): Student!
 }
 
 input UpdateUserInput {
@@ -114,7 +115,6 @@ input CreateStudentInput {
   dateOfBirth: DateTime!
   dateOfAdmission: DateTime
   address: String!
-  active: Boolean
   studentRollNumber: String
   religious: String
   numberOfSiblings: Float
@@ -125,6 +125,29 @@ input CreateStudentInput {
   guardianRelation: String!
   guardianPhone: String!
   guardianCNIC: String!
+  guardianProfession: String
+  guardianProfessionType: String
+  guardianMonthlyIncome: Float
+}
+
+input UpdateStudentInput {
+  studentName: String
+  studentCNIC: String
+  gender: String
+  class: String
+  dateOfBirth: DateTime
+  dateOfAdmission: DateTime
+  address: String
+  studentRollNumber: String
+  religious: String
+  numberOfSiblings: Float
+  admissionFee: Float
+  monthlyFee: Float
+  photo: String
+  guardianName: String
+  guardianRelation: String
+  guardianPhone: String
+  guardianCNIC: String
   guardianProfession: String
   guardianProfessionType: String
   guardianMonthlyIncome: Float
