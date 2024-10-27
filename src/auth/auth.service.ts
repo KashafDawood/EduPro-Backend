@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -96,7 +97,13 @@ export class AuthService {
   }
 
   async signUp(signUpInput: SignUpInput): Promise<User> {
-    const newUser = new this.userModel(signUpInput);
+    const existingUser = await this.userModel.findOne({
+      email: signUpInput.email,
+    });
+    if (existingUser) {
+      throw new BadRequestException('User already exists');
+    }
+    const newUser = new this.userModel({ ...signUpInput, role: 'admin' });
     return newUser.save();
   }
 
