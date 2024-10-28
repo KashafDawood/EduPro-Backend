@@ -6,6 +6,9 @@ export class CreateTeacherInput {
   name: string;
 
   @Field()
+  email: string;
+
+  @Field()
   CNIC: string;
 
   @Field()

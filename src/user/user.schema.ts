@@ -134,13 +134,6 @@ UserSchema.pre('findOne', function (next) {
 export class Employee extends User {
   @Field({ nullable: true })
   @Prop({
-    unique: true,
-    validate: [IsEmail, 'please provide a valid email'],
-  })
-  email: string;
-
-  @Field({ nullable: true })
-  @Prop({
     select: false,
   })
   password: string;
@@ -179,11 +172,11 @@ export class Employee extends User {
   })
   guardianCNIC: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   dateOfBirth: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   dateOfJoining: Date;
 
@@ -191,7 +184,7 @@ export class Employee extends User {
   @Prop({ required: [true, 'please tell us your qualification'] })
   qualification: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   salary: number;
 }

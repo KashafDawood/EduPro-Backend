@@ -22,6 +22,29 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Employee {
+  id: ID!
+  name: String!
+  email: String!
+  password: String
+  phone: String
+  role: String!
+  active: Boolean!
+  photo: String
+  refreshToken: String
+  passwordChangedAt: DateTime
+  passwordResetExpire: DateTime
+  passwordResetToken: String
+  address: String
+  guardianName: String!
+  CNIC: String!
+  guardianCNIC: String!
+  dateOfBirth: DateTime
+  dateOfJoining: DateTime
+  qualification: String!
+  salary: Float
+}
+
 type AuthResponse {
   accessToken: String
   refreshToken: String
@@ -75,7 +98,7 @@ type Mutation {
   createStudent(createStudentInput: CreateStudentInput!): Student!
   deleteStudent(studentId: String!): Student!
   updateStudent(studentId: String!, updateStudentInput: UpdateStudentInput!): Student!
-  createTeacher(createTeacherInput: CreateTeacherInput!): User!
+  createTeacher(createTeacherInput: CreateTeacherInput!): Employee!
 }
 
 input UpdateUserInput {
@@ -154,6 +177,7 @@ input UpdateStudentInput {
 
 input CreateTeacherInput {
   name: String!
+  email: String!
   CNIC: String!
   gender: String!
   class: String!
