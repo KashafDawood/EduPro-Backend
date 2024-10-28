@@ -76,6 +76,7 @@ type Mutation {
   createStudent(createStudentInput: CreateStudentInput!): Student!
   deleteStudent(studentId: String!): Student!
   updateStudent(studentId: String!, updateStudentInput: UpdateStudentInput!): Student!
+  createTeacher(createTeacherInput: CreateTeacherInput!): User!
 }
 
 input UpdateUserInput {
@@ -151,4 +152,21 @@ input UpdateStudentInput {
   guardianProfession: String
   guardianProfessionType: String
   guardianMonthlyIncome: Float
+}
+
+input CreateTeacherInput {
+  name: String!
+  CNIC: String!
+  gender: String!
+  class: String!
+  dateOfBirth: DateTime
+  dateOfJoining: DateTime
+  address: String!
+  photo: String
+  guardianName: String!
+  guardianRelation: String!
+  guardianPhone: String!
+  guardianCNIC: String!
+  qualification: String
+  salary: Float
 }

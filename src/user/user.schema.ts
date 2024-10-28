@@ -1,12 +1,12 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { IsEmail } from 'class-validator';
 
 @ObjectType()
-@Schema({ discriminatorKey: 'role' })
+@Schema()
 export class User extends Document {
   @Field(() => ID)
   id: string;
@@ -133,47 +133,67 @@ UserSchema.pre('findOne', function (next) {
   next();
 });
 
-export const employeeSchema = UserSchema.discriminator(
-  'Employee',
-  new MongooseSchema({
-    guardianName: {
-      type: String,
-      required: [true, 'please tell us your guardian name'],
-    },
-    CNIC: {
-      type: String,
-      required: [true, 'please enter the CNIC number'],
-      validate: {
-        validator: function (v: string) {
-          const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
-          return cnicRegex.test(v);
-        },
-        message: (props) => `${props.value} is not a valid CNIC number!`,
+@ObjectType()
+@Schema()
+export class Employee extends User {
+  @Field({ nullable: true })
+  @Prop({
+    unique: true,
+    validate: [IsEmail, 'please provide a valid email'],
+  })
+  email: string;
+
+  @Field({ nullable: true })
+  @Prop({
+    select: false,
+  })
+  password: string;
+
+  @Field()
+  @Prop({ required: [true, 'please tell us your guardian name'] })
+  guardianName: string;
+
+  @Field()
+  @Prop({
+    required: [true, 'please enter the CNIC number'],
+    validate: {
+      validator: function (v: string) {
+        const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
+        return cnicRegex.test(v);
       },
+      message: (props) => `${props.value} is not a valid CNIC number!`,
     },
-    guardianCNIC: {
-      type: String,
-      required: [true, 'please enter the guardian CNIC number'],
-      validate: {
-        validator: function (v: string) {
-          const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
-          return cnicRegex.test(v);
-        },
-        message: (props) => `${props.value} is not a valid CNIC number!`,
+  })
+  CNIC: string;
+
+  @Field()
+  @Prop({
+    required: [true, 'please enter the guardian CNIC number'],
+    validate: {
+      validator: function (v: string) {
+        const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
+        return cnicRegex.test(v);
       },
+      message: (props) => `${props.value} is not a valid CNIC number!`,
     },
-    dateOfBirth: {
-      type: Date,
-    },
-    dateOfJoining: {
-      type: Date,
-    },
-    qualification: {
-      type: String,
-      required: [true, 'please tell us your qualification'],
-    },
-    salary: {
-      type: Number,
-    },
-  }),
-);
+  })
+  guardianCNIC: string;
+
+  @Field()
+  @Prop()
+  dateOfBirth: Date;
+
+  @Field()
+  @Prop()
+  dateOfJoining: Date;
+
+  @Field()
+  @Prop({ required: [true, 'please tell us your qualification'] })
+  qualification: string;
+
+  @Field()
+  @Prop()
+  salary: number;
+}
+
+export const EmployeeSchema = SchemaFactory.createForClass(Employee);
