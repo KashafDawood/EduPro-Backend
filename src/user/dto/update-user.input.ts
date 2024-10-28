@@ -12,9 +12,6 @@ export class UpdateUserInput {
   phone?: string;
 
   @Field({ nullable: true })
-  address?: string;
-
-  @Field({ nullable: true })
   photo?: string;
 
   @Field({ nullable: true })

@@ -35,10 +35,6 @@ export class User extends Document {
   @Prop()
   phone: string;
 
-  @Field({ nullable: true })
-  @Prop()
-  address: string;
-
   @Field()
   @Prop({ enum: ['teacher', 'admin', 'otherStaff'] })
   role: string;
@@ -148,6 +144,10 @@ export class Employee extends User {
     select: false,
   })
   password: string;
+
+  @Field({ nullable: true })
+  @Prop()
+  address: string;
 
   @Field()
   @Prop({ required: [true, 'please tell us your guardian name'] })
