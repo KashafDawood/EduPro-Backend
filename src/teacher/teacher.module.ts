@@ -1,17 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { TeacherResolver } from './teacher.resolver';
-import { UserModule } from 'src/user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { EmployeeSchema, Employee } from 'src/user/user.schema';
+import { Teacher, TeacherSchema } from './teacher.schema';
 
 @Module({
   providers: [TeacherService, TeacherResolver],
   imports: [
-    MongooseModule.forFeature([
-      { name: Employee.name, schema: EmployeeSchema },
-    ]),
-    UserModule,
+    MongooseModule.forFeature([{ name: Teacher.name, schema: TeacherSchema }]),
   ],
 })
 export class TeacherModule {}

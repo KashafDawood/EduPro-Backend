@@ -36,7 +36,7 @@ export class User extends Document {
   phone: string;
 
   @Field()
-  @Prop({ enum: ['teacher', 'admin', 'otherStaff'] })
+  @Prop({ default: 'admin' })
   role: string;
 
   @Field()
@@ -128,65 +128,3 @@ UserSchema.pre('findOne', function (next) {
   this.where({ active: true });
   next();
 });
-
-@ObjectType()
-@Schema()
-export class Employee extends User {
-  @Field({ nullable: true })
-  @Prop({
-    select: false,
-  })
-  password: string;
-
-  @Field({ nullable: true })
-  @Prop()
-  address: string;
-
-  @Field()
-  @Prop({ required: [true, 'please tell us your guardian name'] })
-  guardianName: string;
-
-  @Field()
-  @Prop({
-    required: [true, 'please enter the CNIC number'],
-    validate: {
-      validator: function (v: string) {
-        const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
-        return cnicRegex.test(v);
-      },
-      message: (props) => `${props.value} is not a valid CNIC number!`,
-    },
-  })
-  CNIC: string;
-
-  @Field()
-  @Prop({
-    required: [true, 'please enter the guardian CNIC number'],
-    validate: {
-      validator: function (v: string) {
-        const cnicRegex = /^\d{5}-\d{7}-\d{1}$/;
-        return cnicRegex.test(v);
-      },
-      message: (props) => `${props.value} is not a valid CNIC number!`,
-    },
-  })
-  guardianCNIC: string;
-
-  @Field({ nullable: true })
-  @Prop()
-  dateOfBirth: Date;
-
-  @Field({ nullable: true })
-  @Prop()
-  dateOfJoining: Date;
-
-  @Field()
-  @Prop({ required: [true, 'please tell us your qualification'] })
-  qualification: string;
-
-  @Field({ nullable: true })
-  @Prop()
-  salary: number;
-}
-
-export const EmployeeSchema = SchemaFactory.createForClass(Employee);

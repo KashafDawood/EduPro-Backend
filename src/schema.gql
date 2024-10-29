@@ -22,29 +22,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Employee {
-  id: ID!
-  name: String!
-  email: String!
-  password: String
-  phone: String
-  role: String!
-  active: Boolean!
-  photo: String
-  refreshToken: String
-  passwordChangedAt: DateTime
-  passwordResetExpire: DateTime
-  passwordResetToken: String
-  address: String
-  guardianName: String!
-  CNIC: String!
-  guardianCNIC: String!
-  dateOfBirth: DateTime
-  dateOfJoining: DateTime
-  qualification: String!
-  salary: Float
-}
-
 type AuthResponse {
   accessToken: String
   refreshToken: String
@@ -79,12 +56,34 @@ type Student {
   guardianMonthlyIncome: Float
 }
 
+type Teacher {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+  guardianPhone: String
+  active: Boolean!
+  photo: String
+  address: String
+  guardianName: String!
+  guardianRelation: String!
+  CNIC: String!
+  guardianCNIC: String!
+  class: String!
+  dateOfBirth: DateTime
+  dateOfJoining: DateTime
+  qualification: String!
+  salary: Float
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
   userById(id: String!): User!
   findAllStudent: [Student!]!
   findStudentById(studentId: String!): Student!
+  findAllTeachers: [Teacher!]!
+  findTeacherById(teacherId: String!): Teacher!
 }
 
 type Mutation {
@@ -98,7 +97,9 @@ type Mutation {
   createStudent(createStudentInput: CreateStudentInput!): Student!
   deleteStudent(studentId: String!): Student!
   updateStudent(studentId: String!, updateStudentInput: UpdateStudentInput!): Student!
-  createTeacher(createTeacherInput: CreateTeacherInput!): Employee!
+  createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
+  deleteTeacher(teacherId: String!): Teacher!
+  updateTeacher(teacherId: String!, updateTeacherInput: UpdateTeacherInput!): Teacher!
 }
 
 input UpdateUserInput {
@@ -189,6 +190,24 @@ input CreateTeacherInput {
   guardianRelation: String!
   guardianPhone: String!
   guardianCNIC: String!
+  qualification: String
+  salary: Float
+}
+
+input UpdateTeacherInput {
+  name: String
+  email: String
+  phone: String
+  guardianPhone: String
+  photo: String
+  address: String
+  guardianName: String
+  guardianRelation: String
+  CNIC: String
+  guardianCNIC: String
+  class: String
+  dateOfBirth: DateTime
+  dateOfJoining: DateTime
   qualification: String
   salary: Float
 }
