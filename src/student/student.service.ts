@@ -4,69 +4,36 @@ import { Student } from './student.schema';
 import { Model } from 'mongoose';
 import { CreateStudentInput } from './dto/create-student.input';
 import { UpdateStudentInput } from './dto/update-student.dto';
+import { BaseService } from 'src/base.service';
 
 @Injectable()
-export class StudentService {
-  constructor(
-    @InjectModel(Student.name) private studentModel: Model<Student>,
-  ) {}
+export class StudentService extends BaseService<Student> {
+  constructor(@InjectModel(Student.name) private studentModel: Model<Student>) {
+    super(studentModel);
+  }
 
   async createStudent(
     createStudentInput: CreateStudentInput,
   ): Promise<Student> {
-    const newStudent = new this.studentModel(createStudentInput);
-    return newStudent.save();
+    return this.create(createStudentInput);
   }
 
   async findAllStudent(): Promise<Student[]> {
-    return this.studentModel.find().exec();
+    return this.findAll();
   }
 
   async findStudentById(studentId: string): Promise<Student> {
-    const student = await this.studentModel.findById(studentId).exec();
-
-    if (!student) {
-      throw new NotFoundException(
-        `Student not found with this ${studentId} ID`,
-      );
-    }
-
-    return student;
+    return this.findById(studentId);
   }
 
   async deleteStudent(studentId: string): Promise<Student> {
-    const deletedStudent = await this.studentModel.findByIdAndUpdate(
-      studentId,
-      { active: false },
-      { new: true, runValidators: true },
-    );
-
-    if (!deletedStudent) {
-      throw new NotFoundException(
-        `Student not found with this ${studentId} ID`,
-      );
-    }
-
-    return deletedStudent;
+    return this.delete(studentId);
   }
 
   async updateStudent(
     studentId: string,
     updateStudentInput: UpdateStudentInput,
   ): Promise<Student> {
-    const updatedStudent = await this.studentModel
-      .findByIdAndUpdate(studentId, updateStudentInput, {
-        new: true,
-        runValidators: true,
-      })
-      .exec();
-
-    if (!updatedStudent) {
-      throw new NotFoundException(
-        `Student not found with this ${studentId} ID`,
-      );
-    }
-
-    return updatedStudent;
+    return this.update(studentId, updateStudentInput);
   }
 }

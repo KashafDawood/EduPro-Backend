@@ -6,7 +6,7 @@ export class BaseService<T> {
 
   async create(createInput: any): Promise<T> {
     const newItem = new this.model(createInput);
-    return newItem.save() as unknown as T;
+    return (await newItem.save()) as T;
   }
 
   async findAll(): Promise<T[]> {
