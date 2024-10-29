@@ -11,7 +11,7 @@ export class TeacherResolver {
 
   @Query((returns) => [Teacher])
   findAllTeachers(): Promise<Teacher[]> {
-    return this.teacherService.findAllTeacher();
+    return this.teacherService.findAllTeachers();
   }
 
   @Mutation((returns) => Teacher)

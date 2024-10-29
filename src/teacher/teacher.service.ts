@@ -1,19 +1,16 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.dto';
 import { Teacher } from './teacher.schema';
+import { BaseService } from 'src/base.service';
 
 @Injectable()
-export class TeacherService {
-  constructor(
-    @InjectModel(Teacher.name) private teacherModel: Model<Teacher>,
-  ) {}
+export class TeacherService extends BaseService<Teacher> {
+  constructor(@InjectModel(Teacher.name) private teacherModel: Model<Teacher>) {
+    super(teacherModel);
+  }
 
   async createTeacher(
     createTeacherInput: CreateTeacherInput,
@@ -33,55 +30,22 @@ export class TeacherService {
     return newTeacher.save();
   }
 
-  async findAllTeacher(): Promise<Teacher[]> {
-    return this.teacherModel.find().exec();
-  }
-
-  async findTeacherById(teacherId: string): Promise<Teacher> {
-    const teacher = await this.teacherModel.findById(teacherId).exec();
-
-    if (!teacher) {
-      throw new NotFoundException(
-        `Teacher not found with this ${teacherId} ID`,
-      );
-    }
-
-    return teacher;
-  }
-
-  async deleteTeacher(teacherId: string): Promise<Teacher> {
-    const deletedTeacher = await this.teacherModel.findByIdAndUpdate(
-      teacherId,
-      { active: false },
-      { new: true, runValidators: true },
-    );
-
-    if (!deletedTeacher) {
-      throw new NotFoundException(
-        `Teacher not found with this ${teacherId} ID`,
-      );
-    }
-
-    return deletedTeacher;
-  }
-
   async updateTeacher(
-    teacherId: string,
+    id: string,
     updateTeacherInput: UpdateTeacherInput,
   ): Promise<Teacher> {
-    const updatedTeacher = await this.teacherModel
-      .findByIdAndUpdate(teacherId, updateTeacherInput, {
-        new: true,
-        runValidators: true,
-      })
-      .exec();
+    return this.update(id, updateTeacherInput);
+  }
 
-    if (!updatedTeacher) {
-      throw new NotFoundException(
-        `Teacher not found with this ${teacherId} ID`,
-      );
-    }
+  async deleteTeacher(id: string): Promise<Teacher> {
+    return this.delete(id);
+  }
 
-    return updatedTeacher;
+  async findTeacherById(id: string): Promise<Teacher> {
+    return this.findById(id);
+  }
+
+  async findAllTeachers(): Promise<Teacher[]> {
+    return this.findAll();
   }
 }
