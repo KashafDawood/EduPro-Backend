@@ -7,13 +7,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { UpdateUserInput } from './dto/update-user.input';
+import { BaseService } from 'src/base.service';
 
 @Injectable()
-export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+export class UserService extends BaseService<User> {
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {
+    super(userModel);
+  }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return this.findAll();
   }
 
   async findByEmail(email: string): Promise<User> {
@@ -39,28 +42,10 @@ export class UserService {
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.userModel.findById(id).exec();
-
-    if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    return user;
+    return this.findById(id);
   }
 
   async DeleteMe(id: string): Promise<User> {
-    const deletedUser = await this.userModel
-      .findByIdAndUpdate(
-        id,
-        { active: false },
-        { new: true, runValidators: true },
-      )
-      .exec();
-
-    if (!deletedUser) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
-
-    return deletedUser;
+    return this.delete(id);
   }
 }
