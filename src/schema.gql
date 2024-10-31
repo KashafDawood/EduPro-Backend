@@ -84,6 +84,12 @@ type Subject {
   percentage: Float
 }
 
+type Class {
+  id: ID!
+  name: String!
+  section: String!
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
@@ -94,6 +100,8 @@ type Query {
   findTeacherById(teacherId: String!): Teacher!
   findAllSubject: [Subject!]!
   findSubjectById(id: String!): Subject!
+  findAllClasses: [Class!]!
+  findClassById(id: String!): Class!
 }
 
 type Mutation {
@@ -113,6 +121,9 @@ type Mutation {
   createSubject(createSubjectInput: CreateSubjectInput!): Subject!
   deleteSubject(id: String!): Subject!
   updateSubject(id: String!, updateSubjectInput: UpdateSubjectInput!): Subject!
+  createClass(createClassInput: CreateClassInput!): Class!
+  updateClass(id: String!, updateClassInput: UpdateClassInput!): Class!
+  deleteClass(id: String!): Class!
 }
 
 input UpdateUserInput {
@@ -237,4 +248,14 @@ input UpdateSubjectInput {
   marks: Float
   totalMarks: Float
   percentage: Float
+}
+
+input CreateClassInput {
+  name: String!
+  section: String!
+}
+
+input UpdateClassInput {
+  name: String
+  section: String
 }
