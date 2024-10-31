@@ -79,9 +79,9 @@ type Teacher {
 type Subject {
   id: ID!
   name: String!
-  marks: Float!
-  totalMarks: Float!
-  percentage: Float!
+  marks: Float
+  totalMarks: Float
+  percentage: Float
 }
 
 type Query {

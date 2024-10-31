@@ -15,10 +15,6 @@ export class UserService extends BaseService<User> {
     super(userModel);
   }
 
-  async findAll(): Promise<User[]> {
-    return this.findAll();
-  }
-
   async findByEmail(email: string): Promise<User> {
     return this.userModel.findOne({ email }).exec();
   }
@@ -39,13 +35,5 @@ export class UserService extends BaseService<User> {
     }
 
     return updatedUser;
-  }
-
-  async findById(id: string): Promise<User> {
-    return this.findById(id);
-  }
-
-  async DeleteMe(id: string): Promise<User> {
-    return this.delete(id);
   }
 }

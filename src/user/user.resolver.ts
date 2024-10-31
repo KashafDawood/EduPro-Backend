@@ -27,7 +27,7 @@ export class UserResolver {
 
   @Mutation((returns) => User)
   async DeleteMe(@Args('id') id: string): Promise<User> {
-    return this.userService.DeleteMe(id);
+    return this.userService.delete(id);
   }
 
   @Mutation((returns) => User)

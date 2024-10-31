@@ -12,7 +12,7 @@ export class Subject extends Document {
   @Prop({ required: [true, 'Please tell us Subject name'] })
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop({
     validate: {
       validator: function (value: number) {
@@ -23,11 +23,11 @@ export class Subject extends Document {
   })
   marks?: number;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   totalMarks?: number;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop({
     min: [0, 'Percentage cannot be less than 0'],
     max: [100, 'Percentage cannot be more than 100'],
