@@ -23,10 +23,6 @@ export class Subject extends Document {
   })
   marks?: number;
 
-  @Field()
-  @Prop({ default: true })
-  active: boolean;
-
   @Field({ nullable: true })
   @Prop()
   totalMarks?: number;

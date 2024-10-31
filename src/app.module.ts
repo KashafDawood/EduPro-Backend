@@ -7,9 +7,10 @@ import { AuthGuard } from './auth/auth.guard';
 import { StudentModule } from './student/student.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { SubjectModule } from './subject/subject.module';
+import { ClassModule } from './class/class.module';
 
 @Module({
-  imports: [UserModule, AuthModule, ConfigrationModule, StudentModule, TeacherModule, SubjectModule],
+  imports: [UserModule, AuthModule, ConfigrationModule, StudentModule, TeacherModule, SubjectModule, ClassModule],
   providers: [
     {
       provide: APP_GUARD,
