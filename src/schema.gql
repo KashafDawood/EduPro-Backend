@@ -76,6 +76,14 @@ type Teacher {
   salary: Float
 }
 
+type Subject {
+  id: ID!
+  name: String!
+  marks: Float!
+  totalMarks: Float!
+  percentage: Float!
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
@@ -84,6 +92,8 @@ type Query {
   findStudentById(studentId: String!): Student!
   findAllTeachers: [Teacher!]!
   findTeacherById(teacherId: String!): Teacher!
+  findAllSubject: [Subject!]!
+  findSubjectById(id: String!): Subject!
 }
 
 type Mutation {
@@ -100,6 +110,9 @@ type Mutation {
   createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
   deleteTeacher(teacherId: String!): Teacher!
   updateTeacher(teacherId: String!, updateTeacherInput: UpdateTeacherInput!): Teacher!
+  createSubject(createSubjectInput: CreateSubjectInput!): Subject!
+  deleteSubject(id: String!): Subject!
+  updateSubject(id: String!, updateSubjectInput: UpdateSubjectInput!): Subject!
 }
 
 input UpdateUserInput {
@@ -210,4 +223,18 @@ input UpdateTeacherInput {
   dateOfJoining: DateTime
   qualification: String
   salary: Float
+}
+
+input CreateSubjectInput {
+  name: String!
+  marks: Float
+  totalMarks: Float
+  percentage: Float
+}
+
+input UpdateSubjectInput {
+  name: String!
+  marks: Float
+  totalMarks: Float
+  percentage: Float
 }
