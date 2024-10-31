@@ -22,6 +22,9 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'no-console': 'warn', // Warn on console.log statements
+    'no-unused-vars': 'warn', // Warn on unused variables
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Warn on unused variables, ignore variables starting with _
   },
   'prettier/prettier': [
     'error',
