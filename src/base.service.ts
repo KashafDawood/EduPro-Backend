@@ -23,7 +23,7 @@ export class BaseService<T> {
 
   async update(id: string, updateInput: any): Promise<T> {
     const updatedItem = await this.model
-      .findByIdAndUpdate(id, updateInput, { new: true })
+      .findByIdAndUpdate(id, updateInput, { new: true, runValidators: true })
       .exec();
     if (!updatedItem) {
       throw new NotFoundException(`Item not found with this ${id} ID`);
@@ -37,5 +37,17 @@ export class BaseService<T> {
       throw new NotFoundException(`Item not found with this ${id} ID`);
     }
     return deletedItem;
+  }
+
+  async inactive(id: string): Promise<T> {
+    const inactiveItem = await this.model.findByIdAndUpdate(
+      id,
+      { active: false },
+      { new: true, runValidators: true },
+    );
+    if (!inactiveItem) {
+      throw new NotFoundException(`Item not found with this ${id} ID`);
+    }
+    return inactiveItem;
   }
 }

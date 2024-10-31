@@ -11,29 +11,4 @@ export class SubjectService extends BaseService<Subject> {
   constructor(@InjectModel(Subject.name) private subjectModel: Model<Subject>) {
     super(subjectModel);
   }
-
-  async createSubject(
-    createSubjectInput: CreateSubjectInput,
-  ): Promise<Subject> {
-    return this.create(createSubjectInput);
-  }
-
-  async findAllSubject(): Promise<Subject[]> {
-    return this.findAll();
-  }
-
-  async findSubjectById(id: string): Promise<Subject> {
-    return this.findById(id);
-  }
-
-  async deleteSubject(id: string): Promise<Subject> {
-    return this.delete(id);
-  }
-
-  async updateSubject(
-    id: string,
-    updateSubjectInput: UpdateSubjectInput,
-  ): Promise<Subject> {
-    return this.update(id, updateSubjectInput);
-  }
 }

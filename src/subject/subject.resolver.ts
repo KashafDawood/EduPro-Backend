@@ -10,7 +10,7 @@ export class SubjectResolver {
 
   @Query((returns) => [Subject])
   findAllSubject(): Promise<Subject[]> {
-    return this.subjectService.findAllSubject();
+    return this.subjectService.findAll();
   }
 
   @Mutation((returns) => Subject)
@@ -22,12 +22,12 @@ export class SubjectResolver {
 
   @Query((returns) => Subject)
   findSubjectById(@Args('id') id: string): Promise<Subject> {
-    return this.subjectService.findSubjectById(id);
+    return this.subjectService.findById(id);
   }
 
   @Mutation((returns) => Subject)
   deleteSubject(@Args('id') id: string): Promise<Subject> {
-    return this.subjectService.deleteSubject(id);
+    return this.subjectService.delete(id);
   }
 
   @Mutation((returns) => Subject)
@@ -35,6 +35,6 @@ export class SubjectResolver {
     @Args('id') id: string,
     @Args('updateSubjectInput') updateSubjectInput: UpdateSubjectInput,
   ): Promise<Subject> {
-    return this.subjectService.updateSubject(id, updateSubjectInput);
+    return this.subjectService.update(id, updateSubjectInput);
   }
 }

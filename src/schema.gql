@@ -80,6 +80,7 @@ type Subject {
   id: ID!
   name: String!
   marks: Float
+  active: Boolean!
   totalMarks: Float
   percentage: Float
 }
@@ -233,7 +234,7 @@ input CreateSubjectInput {
 }
 
 input UpdateSubjectInput {
-  name: String!
+  name: String
   marks: Float
   totalMarks: Float
   percentage: Float
