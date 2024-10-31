@@ -11,7 +11,7 @@ export class TeacherResolver {
 
   @Query((returns) => [Teacher])
   findAllTeachers(): Promise<Teacher[]> {
-    return this.teacherService.findAllTeachers();
+    return this.teacherService.findAll();
   }
 
   @Mutation((returns) => Teacher)
@@ -25,12 +25,12 @@ export class TeacherResolver {
   async findTeacherById(
     @Args('teacherId') teacherId: string,
   ): Promise<Teacher> {
-    return this.teacherService.findTeacherById(teacherId);
+    return this.teacherService.findById(teacherId);
   }
 
   @Mutation(() => Teacher)
   async deleteTeacher(@Args('teacherId') teacherId: string): Promise<Teacher> {
-    return this.teacherService.deleteTeacher(teacherId);
+    return this.teacherService.inactive(teacherId);
   }
 
   @Mutation(() => Teacher)
@@ -38,6 +38,6 @@ export class TeacherResolver {
     @Args('teacherId') teacherId: string,
     @Args('updateTeacherInput') updateTeacherInput: UpdateTeacherInput,
   ): Promise<Teacher> {
-    return this.teacherService.updateTeacher(teacherId, updateTeacherInput);
+    return this.teacherService.update(teacherId, updateTeacherInput);
   }
 }

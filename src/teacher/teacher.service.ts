@@ -29,23 +29,4 @@ export class TeacherService extends BaseService<Teacher> {
     });
     return newTeacher.save();
   }
-
-  async updateTeacher(
-    id: string,
-    updateTeacherInput: UpdateTeacherInput,
-  ): Promise<Teacher> {
-    return this.update(id, updateTeacherInput);
-  }
-
-  async deleteTeacher(id: string): Promise<Teacher> {
-    return this.delete(id);
-  }
-
-  async findTeacherById(id: string): Promise<Teacher> {
-    return this.findById(id);
-  }
-
-  async findAllTeachers(): Promise<Teacher[]> {
-    return this.findAll();
-  }
 }

@@ -12,22 +12,22 @@ export class StudentResolver {
   createStudent(
     @Args('createStudentInput') createStudentInput: CreateStudentInput,
   ): Promise<Student> {
-    return this.studentService.createStudent(createStudentInput);
+    return this.studentService.create(createStudentInput);
   }
 
   @Query((returns) => [Student])
   findAllStudent(): Promise<Student[]> {
-    return this.studentService.findAllStudent();
+    return this.studentService.findAll();
   }
 
   @Query((returns) => Student)
   findStudentById(@Args('studentId') studentId: string): Promise<Student> {
-    return this.studentService.findStudentById(studentId);
+    return this.studentService.findById(studentId);
   }
 
   @Mutation((returns) => Student)
   deleteStudent(@Args('studentId') studentId: string): Promise<Student> {
-    return this.studentService.deleteStudent(studentId);
+    return this.studentService.inactive(studentId);
   }
 
   @Mutation((returns) => Student)
@@ -35,6 +35,6 @@ export class StudentResolver {
     @Args('studentId') studentId: string,
     @Args('updateStudentInput') updateStudentInput: UpdateStudentInput,
   ): Promise<Student> {
-    return this.studentService.updateStudent(studentId, updateStudentInput);
+    return this.studentService.update(studentId, updateStudentInput);
   }
 }
