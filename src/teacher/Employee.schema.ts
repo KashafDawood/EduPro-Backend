@@ -70,10 +70,6 @@ export class Employee extends Document {
   })
   guardianCNIC: string;
 
-  @Field()
-  @Prop()
-  class: string;
-
   @Field({ nullable: true })
   @Prop()
   dateOfBirth: Date;
@@ -96,3 +92,12 @@ export class Employee extends Document {
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
+
+@ObjectType()
+@Schema()
+export class Teacher extends Employee {
+  @Field()
+  @Prop()
+  class: string;
+}
+export const TeacherSchema = SchemaFactory.createForClass(Teacher);

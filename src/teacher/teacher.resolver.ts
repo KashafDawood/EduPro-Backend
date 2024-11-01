@@ -1,42 +1,42 @@
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { TeacherService } from './teacher.service';
-import { Employee } from './Employee.schema';
+import { Teacher } from './Employee.schema';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.dto';
 
-@Resolver((of) => Employee)
+@Resolver((of) => Teacher)
 export class TeacherResolver {
   constructor(private teacherService: TeacherService) {}
 
-  @Query((returns) => [Employee])
-  findAllTeachers(): Promise<Employee[]> {
+  @Query((returns) => [Teacher])
+  findAllTeachers(): Promise<Teacher[]> {
     return this.teacherService.findAll();
   }
 
-  @Mutation((returns) => Employee)
+  @Mutation((returns) => Teacher)
   createTeacher(
     @Args('createTeacherInput') createTeacherInput: CreateTeacherInput,
-  ): Promise<Employee> {
+  ): Promise<Teacher> {
     return this.teacherService.createTeacher(createTeacherInput);
   }
 
-  @Query(() => Employee)
+  @Query(() => Teacher)
   async findTeacherById(
     @Args('teacherId') teacherId: string,
-  ): Promise<Employee> {
+  ): Promise<Teacher> {
     return this.teacherService.findById(teacherId);
   }
 
-  @Mutation(() => Employee)
-  async deleteTeacher(@Args('teacherId') teacherId: string): Promise<Employee> {
+  @Mutation(() => Teacher)
+  async deleteTeacher(@Args('teacherId') teacherId: string): Promise<Teacher> {
     return this.teacherService.inactive(teacherId);
   }
 
-  @Mutation(() => Employee)
+  @Mutation(() => Teacher)
   async updateTeacher(
     @Args('teacherId') teacherId: string,
     @Args('updateTeacherInput') updateTeacherInput: UpdateTeacherInput,
-  ): Promise<Employee> {
+  ): Promise<Teacher> {
     return this.teacherService.update(teacherId, updateTeacherInput);
   }
 }

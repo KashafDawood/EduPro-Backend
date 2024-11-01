@@ -68,12 +68,31 @@ type Employee {
   guardianRelation: String!
   CNIC: String!
   guardianCNIC: String!
-  class: String!
   dateOfBirth: DateTime
   dateOfJoining: DateTime
   qualification: String!
   salary: Float
   role: String!
+}
+
+type Teacher {
+  id: ID!
+  name: String!
+  phone: String
+  guardianPhone: String
+  active: Boolean!
+  photo: String
+  address: String
+  guardianName: String!
+  guardianRelation: String!
+  CNIC: String!
+  guardianCNIC: String!
+  dateOfBirth: DateTime
+  dateOfJoining: DateTime
+  qualification: String!
+  salary: Float
+  role: String!
+  class: String!
 }
 
 type Subject {
@@ -96,8 +115,8 @@ type Query {
   userById(id: String!): User!
   findAllStudent: [Student!]!
   findStudentById(studentId: String!): Student!
-  findAllTeachers: [Employee!]!
-  findTeacherById(teacherId: String!): Employee!
+  findAllTeachers: [Teacher!]!
+  findTeacherById(teacherId: String!): Teacher!
   findAllSubject: [Subject!]!
   findSubjectById(id: String!): Subject!
   findAllClasses: [Class!]!
@@ -117,9 +136,9 @@ type Mutation {
   createStudent(createStudentInput: CreateStudentInput!): Student!
   deleteStudent(studentId: String!): Student!
   updateStudent(studentId: String!, updateStudentInput: UpdateStudentInput!): Student!
-  createTeacher(createTeacherInput: CreateTeacherInput!): Employee!
-  deleteTeacher(teacherId: String!): Employee!
-  updateTeacher(teacherId: String!, updateTeacherInput: UpdateTeacherInput!): Employee!
+  createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
+  deleteTeacher(teacherId: String!): Teacher!
+  updateTeacher(teacherId: String!, updateTeacherInput: UpdateTeacherInput!): Teacher!
   createSubject(createSubjectInput: CreateSubjectInput!): Subject!
   deleteSubject(id: String!): Subject!
   updateSubject(id: String!, updateSubjectInput: UpdateSubjectInput!): Subject!

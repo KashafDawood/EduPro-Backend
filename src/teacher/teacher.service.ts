@@ -2,20 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTeacherInput } from './dto/create-teacher.input';
-import { Employee } from './Employee.schema';
+import { Teacher } from './Employee.schema';
 import { BaseService } from 'src/base.service';
 
 @Injectable()
-export class TeacherService extends BaseService<Employee> {
-  constructor(
-    @InjectModel(Employee.name) private teacherModel: Model<Employee>,
-  ) {
+export class TeacherService extends BaseService<Teacher> {
+  constructor(@InjectModel(Teacher.name) private teacherModel: Model<Teacher>) {
     super(teacherModel);
   }
 
   async createTeacher(
     createTeacherInput: CreateTeacherInput,
-  ): Promise<Employee> {
+  ): Promise<Teacher> {
     //Todo
     // const { email, CNIC } = createTeacherInput;
     // const existingTeacher = await this.teacherModel.findOne({
