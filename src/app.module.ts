@@ -9,6 +9,7 @@ import { TeacherModule } from './teacher/teacher.module';
 import { SubjectModule } from './subject/subject.module';
 import { ClassModule } from './class/class.module';
 import { StaffModule } from './staff/staff.module';
+import { ExpenseModule } from './expense/expense.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { StaffModule } from './staff/staff.module';
     SubjectModule,
     ClassModule,
     StaffModule,
+    ExpenseModule,
   ],
   providers: [
     {
