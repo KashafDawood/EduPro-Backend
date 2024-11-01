@@ -59,7 +59,6 @@ type Student {
 type Teacher {
   id: ID!
   name: String!
-  email: String!
   phone: String
   guardianPhone: String
   active: Boolean!
@@ -202,7 +201,6 @@ input UpdateStudentInput {
 
 input CreateTeacherInput {
   name: String!
-  email: String!
   CNIC: String!
   gender: String!
   class: String!
@@ -220,7 +218,6 @@ input CreateTeacherInput {
 
 input UpdateTeacherInput {
   name: String
-  email: String
   phone: String
   guardianPhone: String
   photo: String

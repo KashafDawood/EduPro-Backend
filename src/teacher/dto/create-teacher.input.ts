@@ -5,8 +5,8 @@ export class CreateTeacherInput {
   @Field()
   name: string;
 
-  @Field()
-  email: string;
+  // @Field({ nullable: true })
+  // email?: string;
 
   @Field()
   CNIC: string;

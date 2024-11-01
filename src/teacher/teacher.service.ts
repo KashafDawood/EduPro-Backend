@@ -11,22 +11,4 @@ export class TeacherService extends BaseService<Teacher> {
   constructor(@InjectModel(Teacher.name) private teacherModel: Model<Teacher>) {
     super(teacherModel);
   }
-
-  async createTeacher(
-    createTeacherInput: CreateTeacherInput,
-  ): Promise<Teacher> {
-    //Todo
-    // const { email, CNIC } = createTeacherInput;
-    // const existingTeacher = await this.teacherModel.findOne({
-    //   $or: [{ email }, { CNIC }],
-    // });
-    // if (existingTeacher) {
-    //   throw new BadRequestException('Teacher already exists');
-    // }
-    const newTeacher = new this.teacherModel({
-      ...createTeacherInput,
-      role: 'teacher',
-    });
-    return newTeacher.save();
-  }
 }

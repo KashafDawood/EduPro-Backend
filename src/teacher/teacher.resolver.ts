@@ -3,7 +3,6 @@ import { TeacherService } from './teacher.service';
 import { Teacher } from './teacher.schema';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { UpdateTeacherInput } from './dto/update-teacher.dto';
-import { NotFoundException } from '@nestjs/common';
 
 @Resolver((of) => Teacher)
 export class TeacherResolver {
@@ -18,7 +17,7 @@ export class TeacherResolver {
   createTeacher(
     @Args('createTeacherInput') createTeacherInput: CreateTeacherInput,
   ): Promise<Teacher> {
-    return this.teacherService.createTeacher(createTeacherInput);
+    return this.teacherService.create(createTeacherInput);
   }
 
   @Query(() => Teacher)
