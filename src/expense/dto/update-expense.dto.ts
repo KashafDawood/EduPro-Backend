@@ -2,24 +2,24 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateExpenseInput {
-  @Field(() => Int, { nullable: true })
+  @Field({ nullable: true })
   month?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field({ nullable: true })
   year?: number;
 
-  @Field(() => Int, { nullable: true, defaultValue: 0 })
+  @Field({ nullable: true })
   salaries?: number;
 
-  @Field(() => Int, { nullable: true, defaultValue: 0 })
+  @Field({ nullable: true })
   fees?: number;
 
-  @Field(() => Int, { nullable: true, defaultValue: 0 })
+  @Field({ nullable: true })
   buildingExpense?: number;
 
-  @Field(() => Int, { nullable: true, defaultValue: 0 })
+  @Field({ nullable: true })
   bills?: number;
 
-  @Field(() => Int, { nullable: true, defaultValue: 0 })
+  @Field({ nullable: true })
   miscellaneousExpense?: number;
 }

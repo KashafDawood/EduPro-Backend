@@ -109,6 +109,18 @@ type Class {
   section: String!
 }
 
+type Expense {
+  id: ID!
+  month: Float!
+  year: Float!
+  salaries: Float!
+  fees: Float!
+  buildingExpense: Float!
+  bills: Float!
+  miscellaneousExpense: Float!
+  createdAt: DateTime!
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
@@ -123,6 +135,8 @@ type Query {
   findClassById(id: String!): Class!
   findAllStaffs: [Employee!]!
   findStaffById(staffId: String!): Employee!
+  findAllExpenses: [Expense!]!
+  findExpenseById(expenseId: String!): Expense!
 }
 
 type Mutation {
@@ -148,6 +162,9 @@ type Mutation {
   createStaff(createStaffInput: CreateStaffInput!): Employee!
   deleteStaff(staffId: String!): Employee!
   updateStaff(staffId: String!, updateStaffInput: UpdateStaffInput!): Employee!
+  createExpense(createExpenseInput: CreateExpenseInput!): Expense!
+  deleteExpense(expenseId: String!): Expense!
+  updateExpense(expenseId: String!, updateExpenseInput: UpdateExpenseInput!): Expense!
 }
 
 input UpdateUserInput {
@@ -314,4 +331,24 @@ input UpdateStaffInput {
   dateOfJoining: DateTime
   qualification: String
   salary: Float
+}
+
+input CreateExpenseInput {
+  month: Int!
+  year: Int!
+  salaries: Int! = 0
+  fees: Int! = 0
+  buildingExpense: Int! = 0
+  bills: Int! = 0
+  miscellaneousExpense: Int! = 0
+}
+
+input UpdateExpenseInput {
+  month: Float
+  year: Float
+  salaries: Float
+  fees: Float
+  buildingExpense: Float
+  bills: Float
+  miscellaneousExpense: Float
 }
