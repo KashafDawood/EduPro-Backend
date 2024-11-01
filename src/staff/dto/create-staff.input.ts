@@ -12,6 +12,9 @@ export class CreateStaffInput {
   CNIC: string;
 
   @Field()
+  role: string;
+
+  @Field()
   gender: string;
 
   @Field({ nullable: true })

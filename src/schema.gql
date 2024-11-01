@@ -56,7 +56,7 @@ type Student {
   guardianMonthlyIncome: Float
 }
 
-type Teacher {
+type Employee {
   id: ID!
   name: String!
   phone: String
@@ -73,6 +73,7 @@ type Teacher {
   dateOfJoining: DateTime
   qualification: String!
   salary: Float
+  role: String!
 }
 
 type Subject {
@@ -95,14 +96,14 @@ type Query {
   userById(id: String!): User!
   findAllStudent: [Student!]!
   findStudentById(studentId: String!): Student!
-  findAllTeachers: [Teacher!]!
-  findTeacherById(teacherId: String!): Teacher!
+  findAllTeachers: [Employee!]!
+  findTeacherById(teacherId: String!): Employee!
   findAllSubject: [Subject!]!
   findSubjectById(id: String!): Subject!
   findAllClasses: [Class!]!
   findClassById(id: String!): Class!
-  findAllStaffs: [Teacher!]!
-  findStaffById(staffId: String!): Teacher!
+  findAllStaffs: [Employee!]!
+  findStaffById(staffId: String!): Employee!
 }
 
 type Mutation {
@@ -116,18 +117,18 @@ type Mutation {
   createStudent(createStudentInput: CreateStudentInput!): Student!
   deleteStudent(studentId: String!): Student!
   updateStudent(studentId: String!, updateStudentInput: UpdateStudentInput!): Student!
-  createTeacher(createTeacherInput: CreateTeacherInput!): Teacher!
-  deleteTeacher(teacherId: String!): Teacher!
-  updateTeacher(teacherId: String!, updateTeacherInput: UpdateTeacherInput!): Teacher!
+  createTeacher(createTeacherInput: CreateTeacherInput!): Employee!
+  deleteTeacher(teacherId: String!): Employee!
+  updateTeacher(teacherId: String!, updateTeacherInput: UpdateTeacherInput!): Employee!
   createSubject(createSubjectInput: CreateSubjectInput!): Subject!
   deleteSubject(id: String!): Subject!
   updateSubject(id: String!, updateSubjectInput: UpdateSubjectInput!): Subject!
   createClass(createClassInput: CreateClassInput!): Class!
   updateClass(id: String!, updateClassInput: UpdateClassInput!): Class!
   deleteClass(id: String!): Class!
-  createStaff(createStaffInput: CreateStaffInput!): Teacher!
-  deleteStaff(staffId: String!): Teacher!
-  updateStaff(staffId: String!, updateStaffInput: UpdateStaffInput!): Teacher!
+  createStaff(createStaffInput: CreateStaffInput!): Employee!
+  deleteStaff(staffId: String!): Employee!
+  updateStaff(staffId: String!, updateStaffInput: UpdateStaffInput!): Employee!
 }
 
 input UpdateUserInput {
@@ -265,6 +266,7 @@ input UpdateClassInput {
 input CreateStaffInput {
   name: String!
   CNIC: String!
+  role: String!
   gender: String!
   dateOfBirth: DateTime
   dateOfJoining: DateTime
@@ -284,6 +286,7 @@ input UpdateStaffInput {
   guardianPhone: String
   photo: String
   address: String
+  role: String
   guardianName: String
   guardianRelation: String
   CNIC: String

@@ -21,6 +21,9 @@ export class UpdateStaffInput {
   address?: string;
 
   @Field({ nullable: true })
+  role?: string;
+
+  @Field({ nullable: true })
   guardianName?: string;
 
   @Field({ nullable: true })

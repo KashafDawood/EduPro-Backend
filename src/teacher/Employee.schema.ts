@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
 
 @ObjectType()
 @Schema()
-export class Teacher extends Document {
+export class Employee extends Document {
   @Field(() => ID)
   id: string;
 
@@ -89,6 +89,10 @@ export class Teacher extends Document {
   @Field({ nullable: true })
   @Prop()
   salary: number;
+
+  @Field()
+  @Prop()
+  role: string;
 }
 
-export const TeacherSchema = SchemaFactory.createForClass(Teacher);
+export const EmployeeSchema = SchemaFactory.createForClass(Employee);

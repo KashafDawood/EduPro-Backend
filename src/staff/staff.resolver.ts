@@ -1,5 +1,5 @@
 import { Resolver, Mutation, Query, Args } from '@nestjs/graphql';
-import { Teacher as Staff } from 'src/teacher/teacher.schema';
+import { Employee as Staff } from 'src/teacher/Employee.schema';
 import { StaffService } from './staff.service';
 import { CreateStaffInput } from './dto/create-staff.input';
 import { UpdateStaffInput } from './dto/update-staff.dto';
