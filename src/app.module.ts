@@ -8,9 +8,19 @@ import { StudentModule } from './student/student.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { SubjectModule } from './subject/subject.module';
 import { ClassModule } from './class/class.module';
+import { StaffModule } from './staff/staff.module';
 
 @Module({
-  imports: [UserModule, AuthModule, ConfigrationModule, StudentModule, TeacherModule, SubjectModule, ClassModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    ConfigrationModule,
+    StudentModule,
+    TeacherModule,
+    SubjectModule,
+    ClassModule,
+    StaffModule,
+  ],
   providers: [
     {
       provide: APP_GUARD,

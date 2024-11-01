@@ -101,6 +101,8 @@ type Query {
   findSubjectById(id: String!): Subject!
   findAllClasses: [Class!]!
   findClassById(id: String!): Class!
+  findAllStaffs: [Teacher!]!
+  findStaffById(staffId: String!): Teacher!
 }
 
 type Mutation {
@@ -123,6 +125,9 @@ type Mutation {
   createClass(createClassInput: CreateClassInput!): Class!
   updateClass(id: String!, updateClassInput: UpdateClassInput!): Class!
   deleteClass(id: String!): Class!
+  createStaff(createStaffInput: CreateStaffInput!): Teacher!
+  deleteStaff(staffId: String!): Teacher!
+  updateStaff(staffId: String!, updateStaffInput: UpdateStaffInput!): Teacher!
 }
 
 input UpdateUserInput {
@@ -255,4 +260,36 @@ input CreateClassInput {
 input UpdateClassInput {
   name: String
   section: String
+}
+
+input CreateStaffInput {
+  name: String!
+  CNIC: String!
+  gender: String!
+  dateOfBirth: DateTime
+  dateOfJoining: DateTime
+  address: String!
+  photo: String
+  guardianName: String!
+  guardianRelation: String!
+  guardianPhone: String!
+  guardianCNIC: String!
+  qualification: String
+  salary: Float
+}
+
+input UpdateStaffInput {
+  name: String
+  phone: String
+  guardianPhone: String
+  photo: String
+  address: String
+  guardianName: String
+  guardianRelation: String
+  CNIC: String
+  guardianCNIC: String
+  dateOfBirth: DateTime
+  dateOfJoining: DateTime
+  qualification: String
+  salary: Float
 }
