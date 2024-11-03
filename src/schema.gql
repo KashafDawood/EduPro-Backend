@@ -31,12 +31,22 @@ type RefreshAccessTokenResponse {
   accessToken: String
 }
 
+type Subject {
+  _id: ID!
+  name: String!
+  marks: Float
+  totalMarks: Float
+  percentage: Float
+}
+
 type Student {
-  id: ID!
+  _id: ID!
   studentName: String!
   studentCNIC: String!
   gender: String!
   class: String!
+  Subject: ID!
+  subjectData: [Subject]
   dateOfBirth: DateTime!
   dateOfAdmission: DateTime!
   address: String!
@@ -93,14 +103,6 @@ type Teacher {
   salary: Float
   role: String!
   class: String!
-}
-
-type Subject {
-  id: ID!
-  name: String!
-  marks: Float
-  totalMarks: Float
-  percentage: Float
 }
 
 type Class {
@@ -200,6 +202,7 @@ input CreateStudentInput {
   studentCNIC: String!
   gender: String!
   class: String!
+  Subject: ID!
   dateOfBirth: DateTime!
   dateOfAdmission: DateTime
   address: String!
@@ -223,6 +226,7 @@ input UpdateStudentInput {
   studentCNIC: String
   gender: String
   class: String
+  Subject: ID
   dateOfBirth: DateTime
   dateOfAdmission: DateTime
   address: String

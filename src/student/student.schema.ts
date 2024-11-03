@@ -1,12 +1,13 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Subject, SubjectSchema } from 'src/subject/subject.schema';
 
 @ObjectType()
 @Schema()
 export class Student extends Document {
   @Field(() => ID)
-  id: string;
+  _id: string;
 
   // Student-related fields
   @Field()
@@ -36,6 +37,14 @@ export class Student extends Document {
   @Field()
   @Prop({ required: [true, 'please enter the student class'] })
   class: string;
+
+  @Field(() => ID)
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Subject' })
+  Subject: MongooseSchema.Types.ObjectId;
+
+  @Field(() => [Subject], { nullable: 'itemsAndList' })
+  @Prop({ type: [SubjectSchema], default: [] })
+  subjectData: Subject[];
 
   @Field()
   @Prop({

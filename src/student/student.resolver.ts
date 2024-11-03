@@ -22,7 +22,7 @@ export class StudentResolver {
 
   @Query((returns) => Student)
   findStudentById(@Args('studentId') studentId: string): Promise<Student> {
-    return this.studentService.findById(studentId);
+    return this.studentService.getStudentById(studentId);
   }
 
   @Mutation((returns) => Student)

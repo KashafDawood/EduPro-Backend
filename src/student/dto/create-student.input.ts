@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, ID, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateStudentInput {
@@ -13,6 +13,9 @@ export class CreateStudentInput {
 
   @Field()
   class: string;
+
+  @Field(() => ID)
+  Subject: string;
 
   @Field()
   dateOfBirth: Date;
