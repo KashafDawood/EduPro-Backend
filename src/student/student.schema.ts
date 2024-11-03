@@ -37,9 +37,9 @@ export class Student extends Document {
   @Prop({ required: [true, 'please enter the student class'] })
   class: string;
 
-  @Field(() => ID)
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Subject' })
-  Subject: MongooseSchema.Types.ObjectId;
+  @Field(() => [ID])
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Subject' })
+  Subject: MongooseSchema.Types.ObjectId[];
 
   @Field(() => [Subject], { nullable: 'itemsAndList' })
   @Prop({ type: [SubjectSchema], default: [] })

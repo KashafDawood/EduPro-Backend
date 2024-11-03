@@ -45,7 +45,7 @@ type Student {
   studentCNIC: String!
   gender: String!
   class: String!
-  Subject: ID!
+  Subject: [ID!]!
   subjectData: [Subject]
   dateOfBirth: DateTime!
   dateOfAdmission: DateTime!

@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Student } from './student.schema';
 import { Model } from 'mongoose';
 import { BaseService } from 'src/base.service';
-import { CreateStudentInput } from './dto/create-student.input';
 import { Types } from 'mongoose';
 
 @Injectable()
@@ -28,8 +27,17 @@ export class StudentService extends BaseService<Student> {
             as: 'subjectData',
           },
         },
+        // {
+        //   $lookup: {
+        //     from: 'subjects',
+        //     localField: 'Subject',
+        //     foreignField: '_id',
+        //     as: 'subjectData',
+        //   },
+        // },
       ])
       .exec();
+
     return data[0];
   }
 }
