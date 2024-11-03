@@ -27,14 +27,14 @@ export class StudentService extends BaseService<Student> {
             as: 'subjectData',
           },
         },
-        // {
-        //   $lookup: {
-        //     from: 'subjects',
-        //     localField: 'Subject',
-        //     foreignField: '_id',
-        //     as: 'subjectData',
-        //   },
-        // },
+        {
+          $lookup: {
+            from: 'classes',
+            localField: 'Class',
+            foreignField: '_id',
+            as: 'classData',
+          },
+        },
       ])
       .exec();
 

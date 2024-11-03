@@ -11,8 +11,8 @@ export class UpdateStudentInput {
   @Field({ nullable: true })
   gender?: string;
 
-  @Field({ nullable: true })
-  class?: string;
+  @Field(() => ID, { nullable: true })
+  Class?: string;
 
   @Field(() => ID, { nullable: true })
   Subject?: string;

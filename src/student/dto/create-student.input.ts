@@ -11,8 +11,8 @@ export class CreateStudentInput {
   @Field()
   gender: string;
 
-  @Field()
-  class: string;
+  @Field(() => ID)
+  Class: string;
 
   @Field(() => ID)
   Subject: string;
