@@ -24,20 +24,20 @@ export class AuthService {
   ) {}
 
   async generateAccessToken(user: User) {
-    const payload = { sub: user.id };
+    const payload = { sub: user._id };
     return await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
     });
   }
 
   async generateRefreshToken(user: User) {
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user._id, email: user.email };
     const refreshToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
       expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN,
     });
 
-    this.saveRefreshTokenToDB(user.id, refreshToken);
+    this.saveRefreshTokenToDB(user._id, refreshToken);
     return refreshToken;
   }
 
@@ -108,7 +108,7 @@ export class AuthService {
   }
 
   async updatePassword(req: any, input: UpdatePasswordInput): Promise<User> {
-    const userId = req.user.id;
+    const userId = req.user._id;
     const user = await this.userModel.findById(userId).select('+password');
 
     if (!(await user.correctPassword(input.userPassword, user.password))) {

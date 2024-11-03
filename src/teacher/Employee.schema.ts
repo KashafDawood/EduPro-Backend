@@ -6,7 +6,7 @@ import { Document } from 'mongoose';
 @Schema()
 export class Employee extends Document {
   @Field(() => ID)
-  id: string;
+  _id: string;
 
   @Field()
   @Prop({ required: [true, 'please tell us your name'] })

@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type User {
-  id: ID!
+  _id: ID!
   name: String!
   email: String!
   password: String!
@@ -67,7 +67,7 @@ type Student {
 }
 
 type Employee {
-  id: ID!
+  _id: ID!
   name: String!
   phone: String
   guardianPhone: String
@@ -86,7 +86,7 @@ type Employee {
 }
 
 type Teacher {
-  id: ID!
+  _id: ID!
   name: String!
   phone: String
   guardianPhone: String
@@ -106,13 +106,13 @@ type Teacher {
 }
 
 type Class {
-  id: ID!
+  _id: ID!
   name: String!
   section: String!
 }
 
 type Expense {
-  id: ID!
+  _id: ID!
   month: Float!
   year: Float!
   salaries: Float!

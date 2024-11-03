@@ -6,7 +6,7 @@ import { Document } from 'mongoose';
 @Schema()
 export class Class extends Document {
   @Field(() => ID)
-  id: string;
+  _id: string;
 
   @Field()
   @Prop({ required: [true, 'Please tell us class name'] })

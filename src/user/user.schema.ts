@@ -9,7 +9,7 @@ import { IsEmail } from 'class-validator';
 @Schema()
 export class User extends Document {
   @Field(() => ID)
-  id: string;
+  _id: string;
 
   @Field()
   @Prop({ required: [true, 'please tell us your name'] })

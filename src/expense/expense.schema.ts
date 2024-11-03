@@ -6,7 +6,7 @@ import { Document } from 'mongoose';
 @Schema()
 export class Expense extends Document {
   @Field(() => ID)
-  id: string;
+  _id: string;
 
   @Field()
   @Prop({ required: true })
