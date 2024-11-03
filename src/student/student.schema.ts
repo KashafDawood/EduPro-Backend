@@ -9,7 +9,6 @@ export class Student extends Document {
   @Field(() => ID)
   _id: string;
 
-  // Student-related fields
   @Field()
   @Prop({ required: [true, 'please enter the student name'] })
   studentName: string;
