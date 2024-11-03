@@ -50,7 +50,6 @@ export class StudentService extends BaseService<Student> {
         },
       ])
       .exec();
-    console.log(data);
     return data[0];
   }
 }
