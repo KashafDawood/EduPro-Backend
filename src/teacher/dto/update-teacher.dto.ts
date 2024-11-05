@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, ID, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateTeacherInput {
@@ -32,8 +32,11 @@ export class UpdateTeacherInput {
   @Field({ nullable: true })
   guardianCNIC?: string;
 
-  @Field({ nullable: true })
-  class?: string;
+  @Field(() => [ID], { nullable: true })
+  Class?: string[];
+
+  @Field(() => [ID], { nullable: true })
+  Subject?: string[];
 
   @Field({ nullable: true })
   dateOfBirth?: Date;

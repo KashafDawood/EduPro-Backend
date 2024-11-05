@@ -14,8 +14,8 @@ export class CreateStudentInput {
   @Field(() => ID)
   Class: string;
 
-  @Field(() => ID)
-  Subject: string;
+  @Field(() => [ID])
+  Subject: string[];
 
   @Field()
   dateOfBirth: Date;

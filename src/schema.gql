@@ -109,7 +109,10 @@ type Teacher {
   qualification: String!
   salary: Float
   role: String!
-  class: String!
+  Subject: [ID!]!
+  subjectData: [Subject]
+  Class: [ID!]!
+  classData: [Class]
 }
 
 type Expense {
@@ -203,7 +206,7 @@ input CreateStudentInput {
   studentCNIC: String!
   gender: String!
   Class: ID!
-  Subject: ID!
+  Subject: [ID!]!
   dateOfBirth: DateTime!
   dateOfAdmission: DateTime
   address: String!
@@ -227,7 +230,7 @@ input UpdateStudentInput {
   studentCNIC: String
   gender: String
   Class: ID
-  Subject: ID
+  Subject: [ID!]
   dateOfBirth: DateTime
   dateOfAdmission: DateTime
   address: String
@@ -250,7 +253,8 @@ input CreateTeacherInput {
   name: String!
   CNIC: String!
   gender: String!
-  class: String!
+  Class: [ID!]!
+  Subject: [ID!]!
   dateOfBirth: DateTime
   dateOfJoining: DateTime
   address: String!
@@ -273,7 +277,8 @@ input UpdateTeacherInput {
   guardianRelation: String
   CNIC: String
   guardianCNIC: String
-  class: String
+  Class: [ID!]
+  Subject: [ID!]
   dateOfBirth: DateTime
   dateOfJoining: DateTime
   qualification: String

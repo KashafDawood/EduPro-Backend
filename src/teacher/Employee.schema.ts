@@ -1,6 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Class, ClassSchema } from 'src/class/class.schema';
+import { Subject, SubjectSchema } from 'src/subject/subject.schema';
 
 @ObjectType()
 @Schema()
@@ -96,8 +98,20 @@ export const EmployeeSchema = SchemaFactory.createForClass(Employee);
 @ObjectType()
 @Schema()
 export class Teacher extends Employee {
-  @Field()
-  @Prop()
-  class: string;
+  @Field(() => [ID])
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Subject' })
+  Subject: MongooseSchema.Types.ObjectId[];
+
+  @Field(() => [Subject], { nullable: 'itemsAndList' })
+  @Prop({ type: [SubjectSchema], default: [] })
+  subjectData: Subject[];
+
+  @Field(() => [ID])
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Class' })
+  Class: MongooseSchema.Types.ObjectId[];
+
+  @Field(() => [Class], { nullable: 'itemsAndList' })
+  @Prop({ type: [ClassSchema], default: [] })
+  classData: Class[];
 }
 export const TeacherSchema = SchemaFactory.createForClass(Teacher);

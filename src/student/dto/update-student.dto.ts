@@ -14,8 +14,8 @@ export class UpdateStudentInput {
   @Field(() => ID, { nullable: true })
   Class?: string;
 
-  @Field(() => ID, { nullable: true })
-  Subject?: string;
+  @Field(() => [ID], { nullable: true })
+  Subject?: string[];
 
   @Field({ nullable: true })
   dateOfBirth?: Date;
