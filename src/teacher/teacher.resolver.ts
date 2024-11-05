@@ -24,7 +24,7 @@ export class TeacherResolver {
   async findTeacherById(
     @Args('teacherId') teacherId: string,
   ): Promise<Teacher> {
-    return this.teacherService.findById(teacherId);
+    return this.teacherService.getTeacherById(teacherId);
   }
 
   @Mutation(() => Teacher)

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateTeacherInput } from './dto/create-teacher.input';
 import { Teacher } from './Employee.schema';
 import { BaseService } from 'src/base.service';
@@ -27,5 +27,35 @@ export class TeacherService extends BaseService<Teacher> {
       role: 'teacher',
     });
     return newTeacher.save();
+  }
+
+  async getTeacherById(id: string): Promise<Teacher> {
+    const data = await this.teacherModel
+      .aggregate([
+        {
+          $match: {
+            _id: new Types.ObjectId(id),
+          },
+        },
+        {
+          $lookup: {
+            from: 'subjects',
+            localField: 'Subject',
+            foreignField: '_id',
+            as: 'subjectData',
+          },
+        },
+        {
+          $lookup: {
+            from: 'classes',
+            localField: 'Class',
+            foreignField: '_id',
+            as: 'classData',
+          },
+        },
+      ])
+      .exec();
+
+    return data[0];
   }
 }
