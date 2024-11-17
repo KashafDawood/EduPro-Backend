@@ -12,9 +12,6 @@ export class UpdateExpenseInput {
   salaries?: number;
 
   @Field({ nullable: true })
-  fees?: number;
-
-  @Field({ nullable: true })
   buildingExpense?: number;
 
   @Field({ nullable: true })

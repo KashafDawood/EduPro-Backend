@@ -12,9 +12,6 @@ export class CreateExpenseInput {
   salaries: number;
 
   @Field(() => Int, { defaultValue: 0 })
-  fees: number;
-
-  @Field(() => Int, { defaultValue: 0 })
   buildingExpense: number;
 
   @Field(() => Int, { defaultValue: 0 })

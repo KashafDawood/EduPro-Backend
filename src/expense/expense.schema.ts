@@ -22,10 +22,6 @@ export class Expense extends Document {
 
   @Field()
   @Prop({ default: 0 })
-  fees: number;
-
-  @Field()
-  @Prop({ default: 0 })
   buildingExpense: number;
 
   @Field()

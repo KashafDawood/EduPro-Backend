@@ -120,7 +120,6 @@ type Expense {
   month: Float!
   year: Float!
   salaries: Float!
-  fees: Float!
   buildingExpense: Float!
   bills: Float!
   miscellaneousExpense: Float!
@@ -347,7 +346,6 @@ input CreateExpenseInput {
   month: Int!
   year: Int!
   salaries: Int! = 0
-  fees: Int! = 0
   buildingExpense: Int! = 0
   bills: Int! = 0
   miscellaneousExpense: Int! = 0
