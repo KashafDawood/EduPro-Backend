@@ -355,7 +355,6 @@ input UpdateExpenseInput {
   month: Float
   year: Float
   salaries: Float
-  fees: Float
   buildingExpense: Float
   bills: Float
   miscellaneousExpense: Float
