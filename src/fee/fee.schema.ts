@@ -14,7 +14,7 @@ export class Fee extends Document {
 
   @Field()
   @Prop({ required: true })
-  month: string;
+  month: number;
 
   @Field()
   @Prop({ required: true })

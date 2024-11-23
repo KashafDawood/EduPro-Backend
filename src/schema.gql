@@ -126,6 +126,13 @@ type Expense {
   createdAt: DateTime!
 }
 
+type Fee {
+  _id: ID!
+  amount: Float!
+  month: Float!
+  year: Float!
+}
+
 type Query {
   users: [User!]!
   userByEmail(email: String!): User
@@ -142,6 +149,8 @@ type Query {
   findStaffById(staffId: String!): Employee!
   findAllExpenses: [Expense!]!
   findExpenseById(expenseId: String!): Expense!
+  findAllFees: [Fee!]!
+  findFeeById(feeId: String!): Fee!
 }
 
 type Mutation {
@@ -170,6 +179,9 @@ type Mutation {
   createExpense(createExpenseInput: CreateExpenseInput!): Expense!
   deleteExpense(expenseId: String!): Expense!
   updateExpense(expenseId: String!, updateExpenseInput: UpdateExpenseInput!): Expense!
+  createFee(createFeeInput: CreateFeeInput!): Fee!
+  deleteFee(feeId: String!): Fee!
+  updateFee(feeId: String!, updateFeeInput: UpdateFeeInput!): Fee!
 }
 
 input UpdateUserInput {
@@ -358,4 +370,16 @@ input UpdateExpenseInput {
   buildingExpense: Float
   bills: Float
   miscellaneousExpense: Float
+}
+
+input CreateFeeInput {
+  amount: Float!
+  month: Float!
+  year: Float!
+}
+
+input UpdateFeeInput {
+  month: Float
+  year: Float
+  amount: Float
 }
