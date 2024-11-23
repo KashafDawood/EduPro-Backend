@@ -10,6 +10,7 @@ import { SubjectModule } from './subject/subject.module';
 import { ClassModule } from './class/class.module';
 import { StaffModule } from './staff/staff.module';
 import { ExpenseModule } from './expense/expense.module';
+import { FeeModule } from './fee/fee.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ExpenseModule } from './expense/expense.module';
     ClassModule,
     StaffModule,
     ExpenseModule,
+    FeeModule,
   ],
   providers: [
     {
