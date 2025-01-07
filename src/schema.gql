@@ -137,6 +137,7 @@ type Query {
   users: [User!]!
   userByEmail(email: String!): User
   userById(id: String!): User!
+  me: User!
   findAllStudent: [Student!]!
   findStudentById(studentId: String!): Student!
   findAllTeachers: [Teacher!]!

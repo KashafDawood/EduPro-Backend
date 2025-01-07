@@ -129,4 +129,20 @@ export class AuthService {
 
     return user;
   }
+
+  async me(accessToken: string): Promise<User> {
+    try {
+      const payload = await this.jwtService.verifyAsync(accessToken, {
+        secret: process.env.JWT_ACCESS_SECRET,
+      });
+      console.log(accessToken);
+      const user = await this.userService.findById(payload.sub);
+      if (!user) {
+        throw new NotFoundException('User not found');
+      }
+      return user;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid token');
+    }
+  }
 }

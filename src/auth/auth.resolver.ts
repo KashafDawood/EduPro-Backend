@@ -1,4 +1,4 @@
-import { Mutation, Resolver, Args, Context } from '@nestjs/graphql';
+import { Mutation, Resolver, Args, Context, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { User } from 'src/user/user.schema';
 import { SignUpInput } from './dto/signUp-user.input';
@@ -9,6 +9,7 @@ import { RefreshAccessTokenResponse } from './dto/refresh-accessToken.dto';
 import { Public } from 'src/decorators/publicRoute.decorator';
 import { UpdatePasswordInput } from './dto/update-password.input';
 import { ForgetPasswordInput } from './dto/forget-password.input';
+import { UnauthorizedException } from '@nestjs/common';
 
 @Resolver((of) => User)
 export class AuthResolver {
@@ -75,6 +76,22 @@ export class AuthResolver {
   signUp(@Args('signUpInput') signUpInput: SignUpInput): Promise<User> {
     return this.authService.signUp(signUpInput);
   }
+
+  @Query((returns) => User)
+  async me(@Context('req') req: Request): Promise<User> {
+    const accessToken = req.cookies['accessToken'];
+    console.log(accessToken);
+    if (!accessToken) {
+      throw new UnauthorizedException('No access token found');
+    }
+    return this.authService.me(accessToken);
+  }
+
+  // @Public()
+  // @Mutation((returns) => User)
+  // async me(@Args('accessToken') accessToken: string): Promise<User> {
+  //   return this.authService.me(accessToken);
+  // }
 
   @Mutation((returns) => User)
   updatePassword(
