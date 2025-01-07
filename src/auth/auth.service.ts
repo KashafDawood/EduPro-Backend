@@ -93,7 +93,7 @@ export class AuthService {
       .exec();
 
     if (!user) {
-      throw new UnauthorizedException('Incorrect! email');
+      throw new UnauthorizedException('Incorrect! Email or Password');
     }
 
     user.correctPassword(input.password, user.password);
