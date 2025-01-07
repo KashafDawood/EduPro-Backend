@@ -52,6 +52,10 @@ export class User extends Document {
   refreshToken: string;
 
   @Field({ nullable: true })
+  @Prop({ default: null })
+  accessToken: string;
+
+  @Field({ nullable: true })
   @Prop()
   passwordChangedAt: Date;
 

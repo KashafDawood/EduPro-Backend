@@ -12,6 +12,7 @@ type User {
   active: Boolean!
   photo: String
   refreshToken: String
+  accessToken: String
   passwordChangedAt: DateTime
   passwordResetExpire: DateTime
   passwordResetToken: String

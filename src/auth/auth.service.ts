@@ -25,9 +25,11 @@ export class AuthService {
 
   async generateAccessToken(user: User) {
     const payload = { sub: user._id };
-    return await this.jwtService.signAsync(payload, {
+    const accessToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
     });
+    this.saveAccessTokenToDB(user._id, accessToken);
+    return accessToken;
   }
 
   async generateRefreshToken(user: User) {
@@ -49,6 +51,12 @@ export class AuthService {
         { refreshToken: hashedRefreshToken },
         { new: true },
       )
+      .exec();
+  }
+
+  async saveAccessTokenToDB(id: string, accessToken: string) {
+    await this.userModel
+      .findByIdAndUpdate(id, { accessToken }, { new: true })
       .exec();
   }
 
