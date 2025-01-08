@@ -12,7 +12,6 @@ type User {
   active: Boolean!
   photo: String
   refreshToken: String
-  accessToken: String
   passwordChangedAt: DateTime
   passwordResetExpire: DateTime
   passwordResetToken: String
@@ -138,7 +137,6 @@ type Query {
   users: [User!]!
   userByEmail(email: String!): User
   userById(id: String!): User!
-  me: User!
   findAllStudent: [Student!]!
   findStudentById(studentId: String!): Student!
   findAllTeachers: [Teacher!]!
@@ -161,8 +159,10 @@ type Mutation {
   signIn(signInInput: SignInInput!): AuthResponse!
   refreshAccessToken(id: String!, refreshToken: String!): RefreshAccessTokenResponse!
   signUp(signUpInput: SignUpInput!): User!
+  me(accessToken: String!): User!
   updatePassword(updatePasswordInput: UpdatePasswordInput!): User!
   forgetPassword(forgetPasswordInput: ForgetPasswordInput!): User!
+  logout: Boolean!
   createStudent(createStudentInput: CreateStudentInput!): Student!
   deleteStudent(studentId: String!): Student!
   updateStudent(studentId: String!, updateStudentInput: UpdateStudentInput!): Student!

@@ -28,7 +28,6 @@ export class AuthService {
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
     });
-    this.saveAccessTokenToDB(user._id, accessToken);
     return accessToken;
   }
 
@@ -51,12 +50,6 @@ export class AuthService {
         { refreshToken: hashedRefreshToken },
         { new: true },
       )
-      .exec();
-  }
-
-  async saveAccessTokenToDB(id: string, accessToken: string) {
-    await this.userModel
-      .findByIdAndUpdate(id, { accessToken }, { new: true })
       .exec();
   }
 
@@ -143,7 +136,6 @@ export class AuthService {
       const payload = await this.jwtService.verifyAsync(accessToken, {
         secret: process.env.JWT_ACCESS_SECRET,
       });
-      console.log(accessToken);
       const user = await this.userService.findById(payload.sub);
       if (!user) {
         throw new NotFoundException('User not found');
@@ -152,5 +144,20 @@ export class AuthService {
     } catch (error) {
       throw new UnauthorizedException('Invalid token');
     }
+  }
+
+  async logout(accessToken: string): Promise<boolean> {
+    const payload = await this.jwtService.verifyAsync(accessToken, {
+      secret: process.env.JWT_ACCESS_SECRET,
+    });
+    const userId = payload?.sub;
+    if (userId) {
+      throw new NotFoundException('User not found');
+    }
+    await this.userModel.findByIdAndUpdate(userId, {
+      accessToken: null,
+      refreshToken: null,
+    });
+    return true;
   }
 }

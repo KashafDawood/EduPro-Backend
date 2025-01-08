@@ -77,21 +77,19 @@ export class AuthResolver {
     return this.authService.signUp(signUpInput);
   }
 
-  @Query((returns) => User)
-  async me(@Context('req') req: Request): Promise<User> {
-    const accessToken = req.cookies['accessToken'];
-    console.log(accessToken);
-    if (!accessToken) {
-      throw new UnauthorizedException('No access token found');
-    }
-    return this.authService.me(accessToken);
-  }
-
-  // @Public()
-  // @Mutation((returns) => User)
-  // async me(@Args('accessToken') accessToken: string): Promise<User> {
+  // @Query((returns) => User)
+  // async me(@Context('req') req: Request): Promise<User> {
+  //   const accessToken = req.cookies['accessToken'];
+  //   if (!accessToken) {
+  //     throw new UnauthorizedException('No access token found');
+  //   }
   //   return this.authService.me(accessToken);
   // }
+
+  @Mutation((returns) => User)
+  async me(@Args('accessToken') accessToken: string): Promise<User> {
+    return this.authService.me(accessToken);
+  }
 
   @Mutation((returns) => User)
   updatePassword(
@@ -108,5 +106,17 @@ export class AuthResolver {
     @Args('forgetPasswordInput') forgetPasswordInput: ForgetPasswordInput,
   ): Promise<User> {
     return this.authService.forgetPassword(forgetPasswordInput);
+  }
+
+  @Public()
+  @Mutation((returns) => Boolean)
+  async logout(
+    @Context('res') res: Response,
+    @Context('req') req: Request,
+  ): Promise<boolean> {
+    const accessToken = req.cookies['accessToken'];
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
+    return this.authService.logout(accessToken);
   }
 }
