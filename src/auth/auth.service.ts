@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SignUpInput } from './dto/signUp-user.input';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { User } from 'src/user/user.schema';
 import { UserService } from 'src/user/user.service';
 import { SignInInput } from './dto/signIn-user.input';
@@ -86,15 +87,18 @@ export class AuthService {
       .exec();
 
     if (!user) {
-      throw new UnauthorizedException('Incorrect! Email or Password');
+      throw new UnauthorizedException('Incorrect! Email');
     }
 
-    user.correctPassword(input.password, user.password);
+    const validPass = await user.correctPassword(input.password, user.password);
 
-    const accessToken = await this.generateAccessToken(user);
-    const refreshToken = await this.generateRefreshToken(user);
-
-    return { accessToken, refreshToken };
+    if (validPass) {
+      const accessToken = await this.generateAccessToken(user);
+      const refreshToken = await this.generateRefreshToken(user);
+      return { accessToken, refreshToken };
+    } else {
+      throw new UnauthorizedException('Incorrect! Password');
+    }
   }
 
   async signUp(signUpInput: SignUpInput): Promise<User> {
@@ -133,6 +137,12 @@ export class AuthService {
 
   async me(accessToken: string): Promise<User> {
     try {
+      // const validToken = await this.verifyToken(accessToken);
+
+      // if (!validToken) {
+      //   throw new UnauthorizedException('Invalid or expired access token');
+      // }
+
       const payload = await this.jwtService.verifyAsync(accessToken, {
         secret: process.env.JWT_ACCESS_SECRET,
       });
@@ -142,7 +152,7 @@ export class AuthService {
       }
       return user;
     } catch (error) {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException('Unauthorized');
     }
   }
 
