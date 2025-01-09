@@ -147,7 +147,6 @@ export class AuthService {
   async me(accessToken: string): Promise<User> {
     try {
       const validToken = await this.verifyToken(accessToken);
-      console.log(validToken);
 
       if (!validToken) {
         throw new UnauthorizedException('Invalid or expired access token');
