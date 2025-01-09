@@ -26,7 +26,7 @@ export class AuthService {
 
   async verifyToken(token: string): Promise<boolean> {
     try {
-      jwt.verify(token, process.env.JWT_SECRET);
+      jwt.verify(token, process.env.JWT_ACCESS_SECRET);
       return true;
     } catch (err) {
       return false;
@@ -147,6 +147,7 @@ export class AuthService {
   async me(accessToken: string): Promise<User> {
     try {
       const validToken = await this.verifyToken(accessToken);
+      console.log(validToken);
 
       if (!validToken) {
         throw new UnauthorizedException('Invalid or expired access token');
