@@ -24,6 +24,15 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async verifyToken(token: string): Promise<boolean> {
+    try {
+      jwt.verify(token, process.env.JWT_SECRET);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
   async generateAccessToken(user: User) {
     const payload = { sub: user._id };
     const accessToken = await this.jwtService.signAsync(payload, {
@@ -137,11 +146,11 @@ export class AuthService {
 
   async me(accessToken: string): Promise<User> {
     try {
-      // const validToken = await this.verifyToken(accessToken);
+      const validToken = await this.verifyToken(accessToken);
 
-      // if (!validToken) {
-      //   throw new UnauthorizedException('Invalid or expired access token');
-      // }
+      if (!validToken) {
+        throw new UnauthorizedException('Invalid or expired access token');
+      }
 
       const payload = await this.jwtService.verifyAsync(accessToken, {
         secret: process.env.JWT_ACCESS_SECRET,
