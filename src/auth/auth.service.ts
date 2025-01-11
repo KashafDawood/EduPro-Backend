@@ -170,7 +170,7 @@ export class AuthService {
       secret: process.env.JWT_ACCESS_SECRET,
     });
     const userId = payload?.sub;
-    if (userId) {
+    if (!userId) {
       throw new NotFoundException('User not found');
     }
     await this.userModel.findByIdAndUpdate(userId, {
