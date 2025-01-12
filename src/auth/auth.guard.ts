@@ -51,7 +51,7 @@ export class AuthGuard implements CanActivate {
 
     if (!token) {
       throw new UnauthorizedException(
-        'You are not logged in, Please login to get access!',
+        'Token Expired! refresh the token or Please log in again.',
       );
     }
 
@@ -77,7 +77,6 @@ export class AuthGuard implements CanActivate {
       return true;
     } catch (error) {
       //Todo
-      console.log(error);
       if (error instanceof TokenExpiredError) {
         throw new UnauthorizedException('Token expired! Please refresh it');
       }
