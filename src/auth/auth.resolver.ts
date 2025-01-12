@@ -48,9 +48,15 @@ export class AuthResolver {
   @Mutation((returns) => RefreshAccessTokenResponse)
   async refreshAccessToken(
     @Args('id') id: string,
-    @Args('refreshToken') refreshToken: string,
     @Context('res') res: Response,
+    @Context('req') req: Request,
   ): Promise<any> {
+    const refreshToken = req.cookies['refreshToken'];
+    console.log(refreshToken);
+    if (!refreshToken) {
+      throw new Error('No Refresh Token found');
+    }
+
     const accessToken = await this.authService.refreshAcessToken(
       id,
       refreshToken,
@@ -110,7 +116,7 @@ export class AuthResolver {
 
   @Public()
   @Mutation((returns) => Boolean)
-  async logout(
+  logout(
     @Context('res') res: Response,
     @Context('req') req: Request,
   ): Promise<boolean> {
