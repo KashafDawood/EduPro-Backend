@@ -52,7 +52,6 @@ export class AuthResolver {
     @Context('req') req: Request,
   ): Promise<any> {
     const refreshToken = req.cookies['refreshToken'];
-    console.log(refreshToken);
     if (!refreshToken) {
       throw new Error('No Refresh Token found');
     }
