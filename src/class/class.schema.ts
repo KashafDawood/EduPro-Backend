@@ -13,7 +13,7 @@ export class Class extends Document {
   name: string;
 
   @Field()
-  @Prop({ required: [true, 'Please tell us section name'] })
+  @Prop()
   section: string;
 }
 
