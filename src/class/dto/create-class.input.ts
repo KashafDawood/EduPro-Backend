@@ -5,6 +5,6 @@ export class CreateClassInput {
   @Field()
   name: string;
 
-  @Field()
-  section: string;
+  @Field({ nullable: true })
+  section?: string;
 }

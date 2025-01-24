@@ -314,7 +314,7 @@ input UpdateSubjectInput {
 
 input CreateClassInput {
   name: String!
-  section: String!
+  section: String
 }
 
 input UpdateClassInput {
