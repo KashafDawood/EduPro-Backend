@@ -332,6 +332,7 @@ input CreateStaffInput {
   dateOfJoining: DateTime
   address: String!
   photo: String
+  phone: String!
   guardianName: String!
   guardianRelation: String!
   guardianPhone: String!

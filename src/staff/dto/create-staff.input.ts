@@ -30,6 +30,9 @@ export class CreateStaffInput {
   photo?: string;
 
   @Field()
+  phone?: string;
+
+  @Field()
   guardianName: string;
 
   @Field()
