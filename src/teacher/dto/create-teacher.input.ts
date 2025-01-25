@@ -14,6 +14,9 @@ export class CreateTeacherInput {
   @Field()
   gender: string;
 
+  @Field()
+  phone: string;
+
   @Field(() => [ID])
   Class: string[];
 

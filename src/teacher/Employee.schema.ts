@@ -14,13 +14,13 @@ export class Employee extends Document {
   @Prop({ required: [true, 'please tell us your name'] })
   name: string;
 
+  @Field()
+  @Prop({ required: [true, 'Please tell us your phone number'] })
+  phone: string;
+
   // @Field({ nullable: true })
   // @Prop()
   // email: string;
-
-  @Field({ nullable: true })
-  @Prop()
-  phone: string;
 
   @Field({ nullable: true })
   @Prop()

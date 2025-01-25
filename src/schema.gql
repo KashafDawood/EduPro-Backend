@@ -76,7 +76,7 @@ type Student {
 type Employee {
   _id: ID!
   name: String!
-  phone: String
+  phone: String!
   guardianPhone: String
   active: Boolean!
   photo: String
@@ -95,7 +95,7 @@ type Employee {
 type Teacher {
   _id: ID!
   name: String!
-  phone: String
+  phone: String!
   guardianPhone: String
   active: Boolean!
   photo: String
@@ -266,6 +266,7 @@ input CreateTeacherInput {
   name: String!
   CNIC: String!
   gender: String!
+  phone: String!
   Class: [ID!]!
   Subject: [ID!]!
   dateOfBirth: DateTime
