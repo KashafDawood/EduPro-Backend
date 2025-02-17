@@ -12,7 +12,6 @@ import { StaffModule } from './staff/staff.module';
 import { ExpenseModule } from './expense/expense.module';
 import { FeeModule } from './fee/fee.module';
 import { FilesModule } from './files/files.module';
-import { ResolverService } from './resolver/resolver.service';
 
 @Module({
   imports: [
@@ -33,7 +32,6 @@ import { ResolverService } from './resolver/resolver.service';
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
-    ResolverService,
   ],
 })
 export class AppModule {}
