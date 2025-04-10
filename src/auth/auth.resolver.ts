@@ -5,7 +5,7 @@ import { SignUpInput } from './dto/signUp-user.input';
 import { SignInInput } from './dto/signIn-user.input';
 import { AuthResponse } from './dto/auth-response.dto';
 import { Request, Response } from 'express';
-import { RefreshAccessTokenResponse } from './dto/refresh-accessToken.dto';
+import { RefreshAccessTokenResponse } from './dto/refresh-AccessToken.dto';
 import { Public } from 'src/decorators/publicRoute.decorator';
 import { UpdatePasswordInput } from './dto/update-password.input';
 import { ForgetPasswordInput } from './dto/forget-password.input';
